@@ -50,6 +50,18 @@ export const projects: Project[] = [
     rotation: "md:rotate-[3deg]",
     wip: true,
   },
+  {
+    slug: "londonlangford",
+    num: "04",
+    title: "London Langford",
+    tagline: "Dropshipping · Moda y accesorios",
+    category: "Shopify · Dropshipping",
+    year: 2026,
+    location: "Remoto",
+    liveUrl: "https://londonlangford.com/",
+    cover: "/images/project-londonlangford.jpg",
+    rotation: "md:rotate-[-1deg]",
+  },
 ];
 
 export const services = [
