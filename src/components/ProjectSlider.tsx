@@ -48,6 +48,15 @@ const ProjectSlider = () => {
 
             <div className="card-overlay" />
 
+            {/* Badge en desarrollo */}
+            {project.wip && (
+              <div style={{ position: "absolute", top: "1rem", right: "1rem", zIndex: 20, background: "rgba(96,165,250,0.15)", border: "1px solid rgba(96,165,250,0.4)", backdropFilter: "blur(8px)", padding: "4px 12px" }}>
+                <span style={{ fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.6rem", letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 700 }}>
+                  En desarrollo
+                </span>
+              </div>
+            )}
+
             <div className="card-info">
               <p style={{ fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>
                 {project.category} · {project.year}

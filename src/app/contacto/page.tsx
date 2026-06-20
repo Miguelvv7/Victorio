@@ -91,7 +91,7 @@ export default function Contacto() {
           </section>
 
           {/* INFO + FORM */}
-          <section style={{ background: "#0d1f3c", color: "#0c1829", padding: "6rem 1.5rem" }}>
+          <section style={{ background: "#0d1f3c", color: "#f0f4ff", padding: "6rem 1.5rem" }}>
             <div style={{ maxWidth: "72rem", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: "4rem" }}>
 
               {/* Info */}
@@ -105,12 +105,12 @@ export default function Contacto() {
                     { cls: "info-02", icon: "🌐", label: "Web", value: "mvictorio.es", href: "https://mvictorio.es" },
                     { cls: "info-03", icon: "📍", label: "Ubicación", value: "Sevilla, España", href: null },
                   ].map((item) => (
-                    <div key={item.label} className={item.cls} style={{ border: "1px solid rgba(12,24,41,0.1)", padding: "1.25rem 1.5rem", opacity: 0, transform: "translateY(16px)" }}>
-                      <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.55)", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "0.3rem" }}>
+                    <div key={item.label} className={item.cls} style={{ border: "1px solid rgba(96,165,250,0.15)", padding: "1.25rem 1.5rem", opacity: 0, transform: "translateY(16px)" }}>
+                      <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.5)", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "0.3rem" }}>
                         {item.icon} {item.label}
                       </p>
                       {item.href
-                        ? <a href={item.href} style={{ fontWeight: 700, fontSize: "clamp(0.9rem,1.5vw,1.2rem)", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#0c1829", textDecoration: "none" }}>{item.value}</a>
+                        ? <a href={item.href} style={{ fontWeight: 700, fontSize: "clamp(0.9rem,1.5vw,1.2rem)", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#f0f4ff", textDecoration: "none" }}>{item.value}</a>
                         : <p style={{ fontWeight: 700, fontSize: "clamp(0.9rem,1.5vw,1.2rem)", textTransform: "uppercase", letterSpacing: "-0.02em", margin: 0 }}>{item.value}</p>
                       }
                     </div>
@@ -129,11 +129,11 @@ export default function Contacto() {
                     { name: "negocio", label: "Negocio", placeholder: "Nombre de tu negocio", type: "input" },
                   ].map((field) => (
                     <div key={field.name}>
-                      <label className="form-label" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.55)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" }}>
+                      <label className="form-label" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.5)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" }}>
                         {field.label}
                       </label>
                       <input name={field.name} value={form[field.name as keyof typeof form]} onChange={handleChange} placeholder={field.placeholder}
-                        style={{ width: "100%", borderBottom: "1px solid rgba(12,24,41,0.2)", paddingBottom: "0.75rem", fontWeight: 700, fontSize: "1.1rem", textTransform: "uppercase", letterSpacing: "-0.02em", background: "transparent", outline: "none", color: "#0c1829" }} />
+                        style={{ width: "100%", borderBottom: "1px solid rgba(96,165,250,0.2)", paddingBottom: "0.75rem", fontWeight: 700, fontSize: "1.1rem", textTransform: "uppercase", letterSpacing: "-0.02em", background: "transparent", outline: "none", color: "#f0f4ff" }} />
                     </div>
                   ))}
                   {[
@@ -141,22 +141,22 @@ export default function Contacto() {
                     { name: "presupuesto", label: "Presupuesto", options: ["Menos de 800€", "800€ – 1.500€", "1.500€ – 3.000€", "Más de 3.000€"] },
                   ].map((field) => (
                     <div key={field.name}>
-                      <label className="form-label" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.55)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" }}>
+                      <label className="form-label" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.5)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" }}>
                         {field.label}
                       </label>
                       <select name={field.name} value={form[field.name as keyof typeof form]} onChange={handleChange}
-                        style={{ width: "100%", borderBottom: "1px solid rgba(12,24,41,0.2)", paddingBottom: "0.75rem", fontWeight: 700, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "-0.02em", background: "transparent", outline: "none", color: "#0c1829" }}>
+                        style={{ width: "100%", borderBottom: "1px solid rgba(96,165,250,0.2)", paddingBottom: "0.75rem", fontWeight: 700, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "-0.02em", background: "transparent", outline: "none", color: "#f0f4ff" }}>
                         <option value="">Selecciona...</option>
                         {field.options.map(o => <option key={o} value={o}>{o}</option>)}
                       </select>
                     </div>
                   ))}
                   <div>
-                    <label className="form-label" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.55)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" }}>
+                    <label className="form-label" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.5)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", display: "block", marginBottom: "0.5rem" }}>
                       Cuéntame más *
                     </label>
                     <textarea name="mensaje" value={form.mensaje} onChange={handleChange} rows={4} placeholder="Qué necesitas, cuándo, qué te parece importante..."
-                      style={{ width: "100%", borderBottom: "1px solid rgba(12,24,41,0.2)", paddingBottom: "0.75rem", fontFamily: "ProximaNova,sans-serif", fontSize: "1rem", background: "transparent", outline: "none", resize: "none", color: "#0c1829" }} />
+                      style={{ width: "100%", borderBottom: "1px solid rgba(96,165,250,0.2)", paddingBottom: "0.75rem", fontFamily: "ProximaNova,sans-serif", fontSize: "1rem", background: "transparent", outline: "none", resize: "none", color: "#f0f4ff" }} />
                   </div>
                   <a href={`mailto:miguelvictorio72@gmail.com?subject=Proyecto web — ${form.nombre}&body=${encodeURIComponent(`Nombre: ${form.nombre}\nNegocio: ${form.negocio}\nTipo: ${form.tipo}\nPresupuesto: ${form.presupuesto}\n\n${form.mensaje}`)}`}
                     style={{ fontFamily: "ProximaNova,sans-serif", color: "#f0f4ff", background: "#60a5fa", padding: "1rem 2rem", fontSize: "0.8rem", letterSpacing: "0.12em", textTransform: "uppercase", display: "inline-block", textDecoration: "none", textAlign: "center", transition: "background 0.2s" }}
@@ -164,7 +164,7 @@ export default function Contacto() {
                     onMouseLeave={e => { e.currentTarget.style.background = "#60a5fa"; }}>
                     Enviar mensaje →
                   </a>
-                  <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.45)", fontSize: "0.75rem" }}>
+                  <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.4)", fontSize: "0.75rem" }}>
                     Respondo en menos de 24 horas.
                   </p>
                 </div>
@@ -200,7 +200,7 @@ export default function Contacto() {
               <p style={{ fontFamily: "ProximaNova,sans-serif", color: "#60a5fa", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "2rem" }}>
                 Qué pasa después de contactarme
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: "1px", background: "rgba(12,24,41,0.08)" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: "1px", background: "rgba(96,165,250,0.05)" }}>
                 {[
                   { num: "01", text: "Te respondo en menos de 24h con preguntas concretas sobre tu negocio." },
                   { num: "02", text: "Mantenemos una conversación para entender bien qué necesitas y cómo puedo ayudarte." },
@@ -210,7 +210,7 @@ export default function Contacto() {
                     <span style={{ color: "#60a5fa", fontWeight: 700, fontSize: "2rem", lineHeight: 1, display: "block", marginBottom: "1rem" }}>
                       {s.num}
                     </span>
-                    <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.65)", fontSize: "0.9rem", lineHeight: 1.6, margin: 0 }}>
+                    <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.6)", fontSize: "0.9rem", lineHeight: 1.6, margin: 0 }}>
                       {s.text}
                     </p>
                   </div>
