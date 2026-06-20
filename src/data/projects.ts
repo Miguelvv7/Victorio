@@ -59,7 +59,7 @@ export const projects: Project[] = [
     year: 2026,
     location: "Remoto",
     liveUrl: "https://londonlangford.com/",
-    cover: "/images/project-londonlangford.png",
+    cover: "/images/langford.png",
     rotation: "md:rotate-[-1deg]",
   },
 ];
