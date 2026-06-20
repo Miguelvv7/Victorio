@@ -34,8 +34,8 @@ const ProjectSlider = () => {
     <div ref={sliderRef} className="projects-slider-wrapper">
       <div className="projects-row">
         {projects.map((project) => (
-          <Link key={project.slug} href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-            className={`project-card group ${project.rotation}`} style={{ textDecoration: "none" }}>
+          project.wip
+            ? <div key={project.slug} className={`project-card group ${project.rotation}`} style={{ cursor: "default" }}>
 
             {/* Imagen real del proyecto */}
             <Image
@@ -67,11 +67,34 @@ const ProjectSlider = () => {
               <p style={{ fontFamily: "ProximaNova, sans-serif", color: "rgba(240,244,255,0.6)", fontSize: "0.85rem", margin: 0 }}>
                 {project.tagline}
               </p>
-              <div style={{ marginTop: "1rem", fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                Ver proyecto →
-              </div>
+              {!project.wip && (
+                <div style={{ marginTop: "1rem", fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  Ver proyecto →
+                </div>
+              )}
             </div>
-          </Link>
+            </div>
+            : <Link key={project.slug} href={project.liveUrl} target="_blank" rel="noopener noreferrer"
+                className={`project-card group ${project.rotation}`} style={{ textDecoration: "none" }}>
+              <Image src={project.cover} alt={project.title} fill
+                className="card-img object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 320px, 45vw" />
+              <div className="card-overlay" />
+              <div className="card-info">
+                <p style={{ fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>
+                  {project.category} · {project.year}
+                </p>
+                <h2 style={{ color: "#f0f4ff", fontWeight: 700, textTransform: "uppercase", letterSpacing: "-0.03em", lineHeight: 1, fontSize: "clamp(1.8rem,3vw,3rem)", margin: "0 0 0.3rem" }}>
+                  {project.title}
+                </h2>
+                <p style={{ fontFamily: "ProximaNova, sans-serif", color: "rgba(240,244,255,0.6)", fontSize: "0.85rem", margin: 0 }}>
+                  {project.tagline}
+                </p>
+                <div style={{ marginTop: "1rem", fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  Ver proyecto →
+                </div>
+              </div>
+            </Link>
         ))}
       </div>
     </div>
