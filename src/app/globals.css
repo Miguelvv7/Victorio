@@ -1,0 +1,676 @@
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap");
+@import "tailwindcss";
+
+@font-face {
+  font-family: "ProximaNova";
+  src: url("/fonts/ProximaNova-Regular.otf");
+}
+
+@theme {
+  --color-bg:        #0c1829;
+  --color-bg-2:      #132035;
+  --color-cream:     #f0f4ff;
+  --color-cream-dim: #8aafd0;
+  --color-green:     #60a5fa;
+  --color-green-lt:  #3b82f6;
+  --color-surface:   #0d1f3c;
+  --font-sans: "Antonio", sans-serif;
+  --font-paragraph: "ProximaNova", sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #0c1829;
+  color: #f0f4ff;
+  font-family: "Antonio", sans-serif;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+body::-webkit-scrollbar { display: none; }
+
+/* ScrollSmoother wrapper — on mobile behaves as normal div */
+#smooth-wrapper {
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+#smooth-content {
+  overflow: visible;
+  width: 100%;
+}
+@media (max-width: 767px) {
+  #smooth-wrapper {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+@layer utilities {
+  .flex-center  { @apply flex justify-center items-center; }
+  .col-center   { @apply flex flex-col justify-center items-center; }
+  .abs-center   { @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2; }
+  .general-title { @apply 2xl:text-[8.5rem] md:text-8xl text-5xl font-bold uppercase leading-[1] tracking-tighter; }
+}
+
+@layer components {
+  .paragraph-line { @apply text-nowrap overflow-hidden; }
+
+  /* ── PRELOADER (estilo elvalabs) ── */
+  .pl-root {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0a1422, #132035);
+  }
+
+  /* Logo centrado */
+  .pl-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    color: #f0f4ff;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    z-index: 10;
+    user-select: none;
+    animation: pl-logo-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes pl-logo-in {
+    from { opacity: 0; scale: 0.85; }
+    to   { opacity: 1; scale: 1; }
+  }
+
+  /* Izquierda */
+  .pl-left {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+
+    .pl-label-loading {
+      font-family: "ProximaNova", sans-serif;
+      font-size: 1rem;
+      color: #fff;
+      position: relative;
+      z-index: 5;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .pl-shadow-loading {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(5rem, 10vw, 9rem);
+      font-weight: 700;
+      color: #4d4d4d;
+      filter: blur(10px);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      line-height: 1;
+    }
+  }
+
+  /* Derecha */
+  .pl-right {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1.5rem;
+
+    .pl-label-percent {
+      font-family: "ProximaNova", sans-serif;
+      font-size: 1rem;
+      color: #fff;
+      position: relative;
+      z-index: 5;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .pl-shadow-percent {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(5rem, 10vw, 9rem);
+      font-weight: 700;
+      color: #4d4d4d;
+      filter: blur(10px);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      line-height: 1;
+    }
+  }
+
+  /* ── NAVBAR ── */
+  .mv-nav {
+    @apply fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-10 py-6;
+    background: transparent;
+  }
+
+  /* ── HERO ── */
+  .hero-outer {
+    background: #0c1829;
+    position: relative;
+    width: 100vw;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    overflow: visible; /* sin clipping — el MacBook respira */
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.012;
+    background-image:
+      linear-gradient(rgba(240,244,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,244,255,0.08) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Palabra gigante de fondo */
+  .hero-bg-word {
+    position: absolute;
+    right: -2vw;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(12rem, 30vw, 38rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: rgba(96,165,250,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  /* Gradiente izq que protege legibilidad */
+  .hero-gradient-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(to right, #0c1829 50%, rgba(12,24,41,0.4) 80%, rgba(12,24,41,0) 100%);
+  }
+
+  /* Contenido — columna izquierda, layout libre */
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 7rem 2rem 5rem 5vw;
+    max-width: 64%;
+    min-height: 100dvh;
+
+    @media (max-width: 767px) {
+      max-width: 100%;
+      padding: 6rem 1.5rem 3rem;
+    }
+  }
+
+  .hero-eyebrow {
+    font-family: "ProximaNova", sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #60a5fa;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-deco-line {
+    height: 1px;
+    width: 4rem;
+    background: rgba(96,165,250,0.4);
+    margin-bottom: 1rem;
+  }
+
+  .hero-metrics-line {
+    height: 1px;
+    background: rgba(96,165,250,0.2);
+    margin-top: 1.2rem;
+    margin-bottom: 0;
+  }
+
+  .hero-title {
+    color: #f0f4ff;
+    font-size: clamp(3.5rem, 9vw, 13rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    line-height: 0.86;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-subtitle {
+    transform: rotate(-2deg);
+    display: inline-block;
+    margin-bottom: 1.4rem;
+
+    span {
+      display: block;
+      text-transform: uppercase;
+      font-size: clamp(1.4rem, 3.5vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 0.9;
+      padding: 0.25em 0.5em;
+      white-space: nowrap;
+      background: #60a5fa;
+      color: #f0f4ff;
+    }
+  }
+
+  .hero-desc {
+    font-family: "ProximaNova", sans-serif;
+    color: rgba(240,244,255,0.55);
+    font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+    line-height: 1.65;
+    max-width: 30rem;
+    margin-top: 0.75rem;
+  }
+
+  .hero-sector-tag {
+    font-family: "ProximaNova", sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240,244,255,0.6);
+    border: 1px solid rgba(96,165,250,0.3);
+    padding: 4px 12px;
+  }
+
+  .hero-metrics {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(96,165,250,0.2);
+
+    .hero-metric-item {
+      .hero-metric-value {
+        color: #60a5fa;
+        font-weight: 700;
+        font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .hero-metric-label {
+        font-family: "ProximaNova", sans-serif;
+        color: rgba(240,244,255,0.5);
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 3px;
+      }
+    }
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 1.4rem;
+
+    .hero-cta-btn {
+      background: #60a5fa;
+      color: #f0f4ff;
+      padding: 0.8rem 1.8rem;
+      font-family: "ProximaNova", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    .hero-cta-email {
+      font-family: "ProximaNova", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240,244,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover { color: rgba(240,244,255,0.9); }
+    }
+  }
+
+  .hero-location {
+    position: absolute;
+    bottom: 2rem;
+    right: 2.5rem;
+    font-family: "ProximaNova", sans-serif;
+    color: rgba(240,244,255,0.45);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    z-index: 4;
+  }
+
+  /* legacy — por si algo referencia hero-container */
+  .hero-container { background: #0c1829; }
+
+  /* ── MESSAGE ── */
+  .message-content {
+    background: #e8f0ff;
+    color: #0c1829;
+    @apply min-h-dvh flex justify-center items-center relative z-20;
+
+    .msg-line1, .msg-line2 {
+      @apply 2xl:text-[8rem] md:text-7xl text-4xl font-bold uppercase leading-[1] tracking-tighter text-center w-full;
+    }
+    .msg-text-scroll { @apply z-10; }
+  }
+
+  /* ── PROYECTOS SLIDER ── */
+  .projects-section {
+    background: #0c1829;
+    @apply min-h-dvh;
+
+    .projects-slider-wrapper {
+      @apply lg:h-dvh min-h-dvh w-full;
+      .projects-row {
+        @apply h-full w-full flex md:flex-row flex-col items-center 2xl:gap-20 lg:gap-16 gap-8 flex-nowrap;
+      }
+    }
+  }
+
+  /* ── PROJECT CARD ── */
+  .project-card {
+    @apply relative z-30 lg:w-[45vw] w-80 lg:h-[65vh] h-72 flex-none overflow-hidden flex flex-col justify-end;
+    border: 1px solid rgba(96,165,250,0.25);
+
+    .card-overlay { @apply absolute inset-0; background: linear-gradient(to top, rgba(15,15,13,0.95) 0%, rgba(15,15,13,0.3) 100%); }
+    .card-info    { @apply relative z-10 p-6 md:p-8; }
+  }
+
+
+  /* ── CINEMATIC SERVICES (estilo elvalabs) ── */
+  .cinematic-services-section {
+    background: #0c1829;
+    @apply relative w-full overflow-hidden;
+    height: 100dvh;
+
+    .sv-header {
+      @apply absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 py-7;
+      border-bottom: 1px solid rgba(96,165,250,0.15);
+      backdrop-filter: blur(1px);
+
+      .sv-header-left {
+        @apply flex items-center gap-5;
+      }
+
+      .sv-label {
+        font-family: "ProximaNova", sans-serif;
+        @apply text-xs uppercase tracking-[0.2em];
+        color: rgba(240,244,255,0.4);
+      }
+
+      .sv-counter {
+        @apply flex items-center gap-1;
+        font-family: "ProximaNova", sans-serif;
+        font-size: 0.75rem;
+        color: rgba(240,244,255,0.5);
+        letter-spacing: 0.1em;
+
+        .sv-num-track {
+          height: 1.1em;
+          overflow: hidden;
+          display: flex;
+          align-items: flex-start;
+
+          .sv-num-inner {
+            display: flex;
+            flex-direction: column;
+            font-weight: 700;
+            color: #60a5fa;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+
+            .sv-num-digit {
+              display: block;
+              height: 1.1em;
+              line-height: 1.1;
+            }
+          }
+        }
+      }
+
+      .sv-progress-track {
+        width: 120px;
+        height: 1px;
+        background: rgba(240,244,255,0.1);
+        overflow: hidden;
+
+        .sv-progress-bar {
+          height: 100%;
+          background: #60a5fa;
+          transform-origin: left;
+          transform: scaleX(0);
+        }
+      }
+    }
+
+    /* Paneles */
+    .sv-panel {
+      @apply absolute inset-0 flex flex-col justify-center px-6 md:px-10;
+      padding-top: 7rem;
+
+      .sv-bg-num {
+        position: absolute;
+        font-size: clamp(8rem, 22vw, 22rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: -0.05em;
+        color: rgba(240,244,255,0.03);
+        right: -1vw;
+        bottom: 5%;
+        line-height: 1;
+        pointer-events: none;
+        user-select: none;
+        z-index: 0;        /* detrás del contenido */
+      }
+
+      .sv-panel-inner {
+        @apply relative z-10 grid md:grid-cols-2 grid-cols-1 items-end gap-10 md:gap-20;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .sv-title-block {
+        .sv-title {
+          font-size: clamp(2.5rem, 5.5vw, 8rem);
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: -0.04em;
+          line-height: 0.88;
+          color: #f0f4ff;
+          margin-bottom: 1.5rem;
+        }
+
+        .sv-title-meta {
+          @apply flex items-center gap-3;
+          font-family: "ProximaNova", sans-serif;
+
+          .sv-price {
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #60a5fa;
+            font-weight: 700;
+          }
+          .sv-dot { color: rgba(240,244,255,0.2); }
+          .sv-time {
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(240,244,255,0.4);
+          }
+        }
+      }
+
+      .sv-info-block {
+        @apply flex flex-col gap-5;
+
+        .sv-desc {
+          font-family: "ProximaNova", sans-serif;
+          font-size: 1rem;
+          line-height: 1.65;
+          color: rgba(240,244,255,0.55);
+          max-width: 26rem;
+        }
+
+        .sv-includes {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.45rem;
+
+          .sv-include-item {
+            font-family: "ProximaNova", sans-serif;
+            font-size: 0.875rem;
+            color: rgba(240,244,255,0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+
+            .sv-arrow { color: #60a5fa; font-size: 0.55rem; }
+          }
+        }
+
+        .sv-cta {
+          display: inline-block;
+          margin-top: 0.5rem;
+          font-family: "ProximaNova", sans-serif;
+          font-size: 0.8rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: #f0f4ff;
+          border: 1px solid #60a5fa;
+          padding: 0.85rem 1.75rem;
+          text-decoration: none;
+          transition: background 0.2s, color 0.2s;
+          width: fit-content;
+
+          &:hover {
+            background: #60a5fa;
+          }
+        }
+      }
+
+      .sv-panel-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(96,165,250,0.12);
+      }
+    }
+  }
+
+  /* ── SERVICIOS (legacy — mantenemos por si acaso) ── */
+  .services-section {
+    background: #0c1829;
+    @apply min-h-dvh overflow-hidden relative;
+  }
+
+  /* ── PROCESO ── */
+  .process-section {
+    background: #0d1f3c;
+    color: #0c1829;
+    @apply min-h-dvh overflow-hidden relative;
+  }
+
+  /* ── WORK MARQUEE ── */
+  .work-marquee-section {
+    background: #0c1829;
+    @apply relative w-full h-[120dvh];
+
+    h1 {
+      @apply uppercase text-[20.5vw] leading-[105%] tracking-tight ml-[2vw] font-bold;
+    }
+  }
+
+  /* ── FOOTER ── */
+  .footer-section {
+    background: #0c1829;
+    @apply min-h-dvh overflow-hidden relative;
+    border-top: 1px solid rgba(96,165,250,0.2);
+
+    .footer-link {
+      font-family: "ProximaNova", sans-serif;
+      color: rgba(240,244,255,0.35);
+      @apply text-sm uppercase tracking-widest transition-colors;
+    }
+    .footer-link:hover { color: #60a5fa; }
+
+    .copyright-box {
+      font-family: "ProximaNova", sans-serif;
+      @apply absolute w-full md:px-10 px-5 py-7 bottom-0 text-sm flex gap-7 md:flex-row flex-col-reverse md:justify-between justify-center items-center;
+      color: rgba(240,244,255,0.2);
+    }
+  }
+
+  /* ── MARQUEE STACK ── */
+  .marquee-track {
+    @apply flex gap-10 whitespace-nowrap;
+    animation: marquee 18s linear infinite;
+  }
+  .marquee-track-reverse { animation-direction: reverse; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
