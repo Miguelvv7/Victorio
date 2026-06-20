@@ -151,11 +151,11 @@ export default function Proyectos() {
                     </a>
                   );
               })}
-              <div className="border-t border-red-900/20" />
+              <div className="border-t border-blue-900/20" />
             </div>
 
             {/* CTA */}
-            <div className="proj-cta max-w-5xl mx-auto mt-20 border border-red-900/20 p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="proj-cta max-w-5xl mx-auto mt-20 border border-blue-900/20 p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div>
                 <p
                   className="text-white/30 text-xs uppercase tracking-widest mb-2"

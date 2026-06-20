@@ -93,7 +93,7 @@ export default function SobreMi() {
           </section>
 
           {/* CUERPO */}
-          <section className="about-body-wrap px-6 md:px-10 py-24 md:py-32 relative overflow-hidden" style={{ background: "#0d1f3c", color: "#0c1829" }}>
+          <section className="about-body-wrap px-6 md:px-10 py-24 md:py-32 relative overflow-hidden" style={{ background: "#0d1f3c", color: "#f0f4ff" }}>
             {/* Badge */}
             <div className="about-badge mb-12 inline-block" style={{ opacity: 0, clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)" }}>
               <div style={{ background: "#60a5fa", padding: "0.4rem 1.5rem", transform: "rotate(-2deg)", display: "inline-block" }}>
@@ -105,12 +105,12 @@ export default function SobreMi() {
 
             <div style={{ maxWidth: "48rem" }}>
               {/* Historia — chars animados */}
-              <h2 className="about-history" style={{ color: "#0c1829", fontWeight: 700, fontSize: "clamp(1.8rem,4vw,4rem)", textTransform: "uppercase", letterSpacing: "-0.03em", lineHeight: 1, marginBottom: "2rem" }}>
+              <h2 className="about-history" style={{ color: "#f0f4ff", fontWeight: 700, fontSize: "clamp(1.8rem,4vw,4rem)", textTransform: "uppercase", letterSpacing: "-0.03em", lineHeight: 1, marginBottom: "2rem" }}>
                 Lo que empezó como un hobby terminó siendo mi trabajo. Aprendí solo, probando, rompiendo cosas y arreglándolas. La práctica hace al maestro.
               </h2>
 
               {/* Filosofía — word reveal */}
-              <p className="about-filosofia" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.55)", fontSize: "clamp(1rem,1.8vw,1.3rem)", lineHeight: 1.6, marginBottom: "2rem" }}>
+              <p className="about-filosofia" style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.6)", fontSize: "clamp(1rem,1.8vw,1.3rem)", lineHeight: 1.6, marginBottom: "2rem" }}>
                 Una web que carga rápido, se encuentra en Google y convierte visitas en llamadas vale más que un diseño bonito que nadie ve.
               </p>
             </div>
@@ -140,19 +140,19 @@ export default function SobreMi() {
               </p>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {porqueYo.map((item) => (
-                  <div key={item.num} className="nohago-item" style={{ borderTop: "1px solid rgba(12,24,41,0.1)", padding: "1.5rem 0", display: "grid", gridTemplateColumns: "3rem 1fr", gap: "1.5rem", alignItems: "start" }}>
+                  <div key={item.num} className="nohago-item" style={{ borderTop: "1px solid rgba(96,165,250,0.12)", padding: "1.5rem 0", display: "grid", gridTemplateColumns: "3rem 1fr", gap: "1.5rem", alignItems: "start" }}>
                     <span style={{ color: "#60a5fa", fontWeight: 700, fontSize: "1.5rem", lineHeight: 1 }}>{item.num}</span>
                     <div>
-                      <p style={{ fontFamily: "ProximaNova,sans-serif", color: "#0c1829", fontWeight: 700, fontSize: "1rem", margin: "0 0 0.3rem", textTransform: "uppercase", letterSpacing: "-0.01em" }}>
+                      <p style={{ fontFamily: "ProximaNova,sans-serif", color: "#f0f4ff", fontWeight: 700, fontSize: "1rem", margin: "0 0 0.3rem", textTransform: "uppercase", letterSpacing: "-0.01em" }}>
                         {item.title}
                       </p>
-                      <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(12,24,41,0.55)", fontSize: "0.95rem", margin: 0, lineHeight: 1.5 }}>
+                      <p style={{ fontFamily: "ProximaNova,sans-serif", color: "rgba(240,244,255,0.5)", fontSize: "0.95rem", margin: 0, lineHeight: 1.5 }}>
                         {item.desc}
                       </p>
                     </div>
                   </div>
                 ))}
-                <div style={{ borderTop: "1px solid rgba(12,24,41,0.1)" }} />
+                <div style={{ borderTop: "1px solid rgba(96,165,250,0.12)" }} />
               </div>
             </div>
           </section>
