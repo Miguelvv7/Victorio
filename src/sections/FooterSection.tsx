@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
+import Link from "next/link";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
@@ -92,12 +93,12 @@ const FooterSection = () => {
         {/* Nav */}
         <div className="footer-nav" style={{ display: "flex", justifyContent: "center", gap: "2.5rem", marginTop: "5rem", flexWrap: "wrap" }}>
           {[{ href: "/proyectos", label: "Proyectos" }, { href: "/sobre-mi", label: "Sobre mí" }, { href: "/contacto", label: "Contacto" }].map(l => (
-            <a key={l.href} href={l.href} className="footer-link"
+            <Link key={l.href} href={l.href} className="footer-link"
               style={{ fontFamily: "ProximaNova, sans-serif", color: "rgba(240,244,255,0.35)", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.12em", textDecoration: "none", transition: "color 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "#60a5fa")}
               onMouseLeave={e => (e.currentTarget.style.color = "rgba(240,244,255,0.35)")}>
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
 
