@@ -36,6 +36,18 @@ export const projects: Project[] = [
     cover: "/images/project-manuel.webp",
     rotation: "md:rotate-[3deg]",
   },
+  {
+    slug: "glucotrack",
+    num: "03",
+    title: "GlucoTrack",
+    tagline: "Monitor de glucosa predictivo · PWA",
+    category: "Next.js · SaaS · PWA",
+    year: 2026,
+    location: "Remoto",
+    liveUrl: "https://glucotrackv2-l5ex.vercel.app/landing/index.html",
+    cover: "/images/project-glucotrack.webp",
+    rotation: "md:rotate-[-2deg]",
+  },
 ];
 
 export const services = [
