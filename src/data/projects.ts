@@ -9,6 +9,7 @@ export interface Project {
   liveUrl: string;
   cover: string;
   rotation: string;
+  wip?: boolean;
 }
 
 export const projects: Project[] = [
@@ -25,20 +26,8 @@ export const projects: Project[] = [
     rotation: "md:rotate-[-3deg]",
   },
   {
-    slug: "manuelinteriorismo",
-    num: "02",
-    title: "Manuel Interiorismo",
-    tagline: "Diseño de interiores · Écija, Sevilla",
-    category: "Shopify · Diseño",
-    year: 2026,
-    location: "Écija, Sevilla",
-    liveUrl: "https://manuelinteriorismo.com/",
-    cover: "/images/project-manuel.webp",
-    rotation: "md:rotate-[3deg]",
-  },
-  {
     slug: "glucotrack",
-    num: "03",
+    num: "02",
     title: "GlucoTrack",
     tagline: "Monitor de glucosa predictivo · PWA",
     category: "Next.js · SaaS · PWA",
@@ -47,6 +36,19 @@ export const projects: Project[] = [
     liveUrl: "https://glucotrackv2-l5ex.vercel.app/landing/index.html",
     cover: "/images/project-glucotrack.webp",
     rotation: "md:rotate-[-2deg]",
+  },
+  {
+    slug: "manuelinteriorismo",
+    num: "03",
+    title: "Manuel Interiorismo",
+    tagline: "Diseño de interiores · Écija, Sevilla",
+    category: "Shopify · Diseño",
+    year: 2026,
+    location: "Écija, Sevilla",
+    liveUrl: "https://manuelinteriorismo.com/",
+    cover: "/images/project-manuel.webp",
+    rotation: "md:rotate-[3deg]",
+    wip: true,
   },
 ];
 
