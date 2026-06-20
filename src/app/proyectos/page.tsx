@@ -105,54 +105,52 @@ export default function Proyectos() {
           {/* GRID */}
           <section className="projects-grid bg-black px-6 md:px-10 pb-32 pt-8">
             <div className="max-w-5xl mx-auto flex flex-col">
-              {projects.map((project) => (
-                <a
-                  key={project.slug}
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="proj-row group border-t border-red-900/20 py-8 flex items-center justify-between gap-6 hover:border-white/30 transition-colors"
-                >
-                  <div className="flex items-center gap-6 md:gap-10">
-                    <span className="text-white/20 font-bold text-2xl md:text-4xl w-12 shrink-0 leading-none">
-                      {project.num}
-                    </span>
-                    <div>
-                      <h2
-                        className="text-white font-bold uppercase tracking-tighter leading-none group-hover:text-red-400 transition-colors"
-                        style={{ fontSize: "clamp(1.5rem, 4vw, 4rem)" }}
-                      >
-                        {project.title}
-                      </h2>
-                      <p
-                        className="text-white/30 text-sm mt-2"
-                        style={{ fontFamily: "ProximaNova, sans-serif" }}
-                      >
-                        {project.tagline}
-                      </p>
+              {projects.map((project) => {
+                const inner = (
+                  <>
+                    <div className="flex items-center gap-6 md:gap-10">
+                      <span className="text-white/20 font-bold text-2xl md:text-4xl w-12 shrink-0 leading-none">
+                        {project.num}
+                      </span>
+                      <div>
+                        <h2
+                          className="text-white font-bold uppercase tracking-tighter leading-none group-hover:text-blue-400 transition-colors"
+                          style={{ fontSize: "clamp(1.5rem, 4vw, 4rem)" }}
+                        >
+                          {project.title}
+                        </h2>
+                        <p className="text-white/30 text-sm mt-2" style={{ fontFamily: "ProximaNova, sans-serif" }}>
+                          {project.tagline}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p
-                      style={{ fontFamily:"ProximaNova,sans-serif", color:"#60a5fa", textTransform:"uppercase", letterSpacing:"0.1em", fontSize:"0.7rem" }}
-                    >
-                      {project.category}
-                    </p>
-                    <p
-                      className="text-white/20 text-xs"
-                      style={{ fontFamily: "ProximaNova, sans-serif" }}
-                    >
-                      {project.year}
-                    </p>
-                    <span
-                      className="text-white/30 group-hover:text-white text-xs uppercase tracking-widest transition-colors mt-2 block"
-                      style={{ fontFamily: "ProximaNova, sans-serif" }}
-                    >
-                      Ver →
-                    </span>
-                  </div>
-                </a>
-              ))}
+                    <div className="text-right shrink-0">
+                      <p style={{ fontFamily:"ProximaNova,sans-serif", color:"#60a5fa", textTransform:"uppercase", letterSpacing:"0.1em", fontSize:"0.7rem" }}>
+                        {project.category}
+                      </p>
+                      <p className="text-white/20 text-xs" style={{ fontFamily: "ProximaNova, sans-serif" }}>
+                        {project.year}
+                      </p>
+                      <span className="text-xs uppercase tracking-widest mt-2 block transition-colors" style={{ fontFamily: "ProximaNova, sans-serif", color: project.wip ? "#60a5fa" : "rgba(255,255,255,0.3)" }}>
+                        {project.wip ? "En desarrollo" : "Ver →"}
+                      </span>
+                    </div>
+                  </>
+                );
+
+                return project.wip
+                  ? (
+                    <div key={project.slug} className="proj-row border-t border-white/10 py-8 flex items-center justify-between gap-6" style={{ cursor: "default" }}>
+                      {inner}
+                    </div>
+                  )
+                  : (
+                    <a key={project.slug} href={project.liveUrl} target="_blank" rel="noopener noreferrer"
+                      className="proj-row group border-t border-white/10 py-8 flex items-center justify-between gap-6 hover:border-white/30 transition-colors">
+                      {inner}
+                    </a>
+                  );
+              })}
               <div className="border-t border-red-900/20" />
             </div>
 
