@@ -32,30 +32,30 @@ const WorkTitleSection = () => {
       </div>
 
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", paddingLeft: "13rem", position: "absolute", bottom: "50vh" }}>
-        {projects.map((project, index) => (
-          <a key={project.slug} href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-            className="work-card"
-            style={{ textDecoration: "none", marginLeft: "-11rem", transform: index % 2 === 0 ? "rotate(-4deg)" : "rotate(3deg)", flexShrink: 0 }}>
+        {projects.map((project, index) => {
+          const card = (
             <div style={{ width: "18rem", background: "#132035", border: "1px solid rgba(96,165,250,0.25)", borderRadius: "1.2vw", overflow: "hidden" }}>
-              {/* Imagen real */}
               <div style={{ position: "relative", height: "10rem", overflow: "hidden" }}>
                 <Image src={project.cover} alt={project.title} fill style={{ objectFit: "cover" }} sizes="288px" />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(12,24,41,0.8) 100%)" }} />
+                {project.wip && (
+                  <div style={{ position: "absolute", top: "0.6rem", right: "0.6rem", background: "rgba(96,165,250,0.15)", border: "1px solid rgba(96,165,250,0.4)", backdropFilter: "blur(8px)", padding: "3px 8px", borderRadius: "2px" }}>
+                    <span style={{ fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.55rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700 }}>En desarrollo</span>
+                  </div>
+                )}
               </div>
               <div style={{ padding: "1rem 1.5rem 1.5rem" }}>
-                <p style={{ fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", margin: "0 0 0.3rem" }}>
-                  {project.category}
-                </p>
-                <h3 style={{ color: "#f0f4ff", fontWeight: 700, textTransform: "uppercase", letterSpacing: "-0.03em", fontSize: "1.3rem", lineHeight: 1, margin: 0 }}>
-                  {project.title}
-                </h3>
-                <p style={{ fontFamily: "ProximaNova, sans-serif", color: "rgba(240,244,255,0.5)", fontSize: "0.75rem", marginTop: "0.3rem", margin: "0.3rem 0 0" }}>
-                  {project.tagline}
-                </p>
+                <p style={{ fontFamily: "ProximaNova, sans-serif", color: "#60a5fa", fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", margin: "0 0 0.3rem" }}>{project.category}</p>
+                <h3 style={{ color: "#f0f4ff", fontWeight: 700, textTransform: "uppercase", letterSpacing: "-0.03em", fontSize: "1.3rem", lineHeight: 1, margin: 0 }}>{project.title}</h3>
+                <p style={{ fontFamily: "ProximaNova, sans-serif", color: "rgba(240,244,255,0.5)", fontSize: "0.75rem", margin: "0.3rem 0 0" }}>{project.tagline}</p>
               </div>
             </div>
-          </a>
-        ))}
+          );
+
+          return project.wip
+            ? <div key={project.slug} className="work-card" style={{ marginLeft: "-11rem", transform: index % 2 === 0 ? "rotate(-4deg)" : "rotate(3deg)", flexShrink: 0, cursor: "default" }}>{card}</div>
+            : <a key={project.slug} href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="work-card" style={{ textDecoration: "none", marginLeft: "-11rem", transform: index % 2 === 0 ? "rotate(-4deg)" : "rotate(3deg)", flexShrink: 0 }}>{card}</a>;
+        })}
       </div>
     </section>
   );
