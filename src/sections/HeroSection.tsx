@@ -110,7 +110,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ triggerAnimation }) => {
       {/* Contenido */}
       <div className="hero-content">
         <p className="hero-eyebrow" style={{ clipPath: "inset(0 100% 0 0)" }}>
-          Disponible para nuevos proyectos — 2026
+          <span className="hidden md:inline">Disponible para nuevos proyectos — 2026</span>
+          <span className="md:hidden">Disponible · 2026</span>
         </p>
         <div className="hero-deco-line" />
 
@@ -119,20 +120,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({ triggerAnimation }) => {
         </div>
 
         <div className="hero-subtitle" style={{ clipPath: "inset(0 50% 0 50%)" }}>
-          <span>Tu web, tu comercial</span>
+          <span>Shopify · WordPress · Automatizaciones</span>
         </div>
 
         <div style={{ marginTop: "1rem" }}>
-          {["Trabajo con estudios de interiorismo,", "negocios de venta al público y ópticas", "que quieren dejar de perder clientes."].map((line, i) => (
+          {[
+            "Tiendas Shopify a medida, webs WordPress",
+            "y automatizaciones con n8n para negocios",
+            "que quieren escalar sin perder el tiempo.",
+          ].map((line, i) => (
             <div key={i} style={{ overflow: "hidden" }}>
               <p className="hero-desc-line hero-desc" style={{ margin: "0.15rem 0" }}>{line}</p>
             </div>
           ))}
         </div>
 
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
-          {["Interiorismo", "Comercio local", "Ópticas"].map(s => (
-            <span key={s} className="hero-sector-tag">{s}</span>
+        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginTop: "1rem", maxWidth: "100%" }}>
+          {["Shopify", "WordPress", "n8n / Make", "Next.js"].map(s => (
+            <span key={s} className="hero-sector-tag" style={{ fontSize: "clamp(0.55rem,2vw,0.68rem)" }}>{s}</span>
           ))}
         </div>
 
@@ -158,7 +163,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ triggerAnimation }) => {
         </div>
       </div>
 
-      <p className="hero-location">Écija, Sevilla · España</p>
+      <p className="hero-location">Écija, Sevilla · Trabajo remoto en toda España</p>
     </section>
   );
 };

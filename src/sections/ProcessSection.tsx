@@ -38,11 +38,12 @@ const ProcessSection = () => {
       scrollTrigger: { trigger: ".process-title", start: "top 88%" },
     });
 
-    // Steps — cada uno entra desde la derecha
+    // Steps — entran desde abajo (no desde el lado, evita overflow en móvil)
+    const stepOffset = window.innerWidth < 768 ? { y: 35, x: 0 } : { y: 0, x: 50 };
     gsap.utils.toArray<HTMLElement>(".step-item").forEach((step, i) => {
       gsap.from(step, {
-        opacity: 0, x: 50, duration: 0.7, ease: "power3.out",
-        scrollTrigger: { trigger: step, start: "top 90%" },
+        opacity: 0, ...stepOffset, duration: 0.7, ease: "power3.out",
+        scrollTrigger: { trigger: step, start: "top 88%", toggleActions: "play none none none" },
         delay: i * 0.08,
       });
     });

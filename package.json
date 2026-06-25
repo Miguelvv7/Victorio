@@ -6,14 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "apply-claude-templates": "npx claude-code-templates@latest --skill creative-design/frontend-design,web-development/react-best-practices,development/senior-frontend,development/senior-fullstack,development/webapp-testing,web-development/web-performance-optimization,creative-design/ui-design-system,creative-design/tailwind-patterns,database/supabase-postgres-best-practices,development/senior-backend"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
     "@react-three/postprocessing": "^3.0.4",
+    "framer-motion": "^12.41.0",
     "gsap": "^3.13.0",
+    "lucide-react": "^1.21.0",
     "next": "15.4.10",
     "postprocessing": "^6.39.1",
     "react": "19.1.0",

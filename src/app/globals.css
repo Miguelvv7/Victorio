@@ -186,7 +186,11 @@ body::-webkit-scrollbar { display: none; }
     min-height: 100dvh;
     display: flex;
     align-items: center;
-    overflow: visible; /* sin clipping — el MacBook respira */
+    overflow: visible;
+
+    @media (max-width: 767px) {
+      overflow-x: hidden;
+    }
   }
 
   .hero-grid-bg {
@@ -215,6 +219,10 @@ body::-webkit-scrollbar { display: none; }
     user-select: none;
     z-index: 1;
     white-space: nowrap;
+
+    @media (max-width: 767px) {
+      display: none;
+    }
   }
 
   /* Gradiente izq que protege legibilidad */
@@ -253,6 +261,14 @@ body::-webkit-scrollbar { display: none; }
     text-transform: uppercase;
     color: #60a5fa;
     margin-bottom: 0.8rem;
+
+    @media (max-width: 767px) {
+      letter-spacing: 0.1em;
+      font-size: 0.62rem;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .hero-deco-line {
@@ -283,6 +299,7 @@ body::-webkit-scrollbar { display: none; }
     transform: rotate(-2deg);
     display: inline-block;
     margin-bottom: 1.4rem;
+    max-width: 100%;
 
     span {
       display: block;
@@ -295,6 +312,20 @@ body::-webkit-scrollbar { display: none; }
       white-space: nowrap;
       background: #60a5fa;
       color: #f0f4ff;
+    }
+
+    @media (max-width: 767px) {
+      transform: rotate(-1.5deg);
+      max-width: calc(100vw - 3rem);
+      overflow: hidden;
+
+      span {
+        font-size: clamp(0.9rem, 4.5vw, 1.4rem);
+        white-space: normal;
+        letter-spacing: -0.01em;
+        line-height: 1.15;
+        word-break: break-word;
+      }
     }
   }
 
@@ -323,6 +354,11 @@ body::-webkit-scrollbar { display: none; }
     margin-top: 1.2rem;
     padding-top: 1.2rem;
     border-top: 1px solid rgba(96,165,250,0.2);
+    flex-wrap: wrap;
+
+    @media (max-width: 767px) {
+      gap: 1.2rem;
+    }
 
     .hero-metric-item {
       .hero-metric-value {
@@ -388,6 +424,21 @@ body::-webkit-scrollbar { display: none; }
     letter-spacing: 0.15em;
     text-transform: uppercase;
     z-index: 4;
+
+    @media (max-width: 767px) {
+      right: auto;
+      left: 1.5rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .hero-cta-email {
+    @media (max-width: 767px) {
+      font-size: 0.6rem !important;
+      letter-spacing: 0.06em !important;
+      word-break: break-all;
+    }
   }
 
   /* legacy — por si algo referencia hero-container */
@@ -413,14 +464,21 @@ body::-webkit-scrollbar { display: none; }
     .projects-slider-wrapper {
       @apply lg:h-dvh min-h-dvh w-full;
       .projects-row {
-        @apply h-full w-full flex md:flex-row flex-col items-center 2xl:gap-20 lg:gap-16 gap-8 flex-nowrap;
+        @apply h-full w-full flex md:flex-row flex-col items-center 2xl:gap-20 lg:gap-16 flex-nowrap;
+        gap: clamp(1.5rem, 5vw, 4rem);
+
+        @media (max-width: 767px) {
+          padding: 4rem 1.2rem;
+          align-items: center;
+        }
       }
     }
   }
 
   /* ── PROJECT CARD ── */
   .project-card {
-    @apply relative z-30 lg:w-[45vw] w-80 lg:h-[65vh] h-72 flex-none overflow-hidden flex flex-col justify-end;
+    @apply relative z-30 lg:w-[45vw] lg:h-[65vh] h-72 flex-none overflow-hidden flex flex-col justify-end;
+    width: clamp(280px, 88vw, 320px);
     border: 1px solid rgba(96,165,250,0.25);
 
     .card-overlay { @apply absolute inset-0; background: linear-gradient(to top, rgba(15,15,13,0.95) 0%, rgba(15,15,13,0.3) 100%); }
@@ -623,7 +681,7 @@ body::-webkit-scrollbar { display: none; }
 
   /* ── PROCESO ── */
   .process-section {
-    background: #0d1f3c;
+    background: #e8f0ff;
     color: #0c1829;
     @apply min-h-dvh overflow-hidden relative;
   }
