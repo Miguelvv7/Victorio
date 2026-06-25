@@ -22,12 +22,29 @@ const ProjectSlider = () => {
       }).to(".projects-section", { x: `-${scrollAmount + 1500}px`, ease: "power1.inOut" });
     }
 
-    gsap.timeline({
-      scrollTrigger: { trigger: ".projects-section", start: "top top", end: "bottom 80%", scrub: true },
-    })
-      .to(".proj-first-text",  { xPercent: -30, ease: "power1.inOut" })
-      .to(".proj-text-scroll", { xPercent: -22, ease: "power1.inOut" }, "<")
-      .to(".proj-second-text", { xPercent: -10, ease: "power1.inOut" }, "<");
+    if (!isTablet) {
+      gsap.timeline({
+        scrollTrigger: { trigger: ".projects-section", start: "top top", end: "bottom 80%", scrub: true },
+      })
+        .to(".proj-first-text",  { xPercent: -30, ease: "power1.inOut" })
+        .to(".proj-text-scroll", { xPercent: -22, ease: "power1.inOut" }, "<")
+        .to(".proj-second-text", { xPercent: -10, ease: "power1.inOut" }, "<");
+    }
+
+    /* ── Móvil: cards entran con fade + slide ── */
+    if (isTablet) {
+      gsap.utils.toArray<HTMLElement>(".project-card").forEach((card, i) => {
+        gsap.fromTo(card,
+          { opacity: 0, y: 50, scale: 0.96 },
+          {
+            opacity: 1, y: 0, scale: 1,
+            duration: 0.65, ease: "power3.out",
+            delay: i * 0.08,
+            scrollTrigger: { trigger: card, start: "top 88%", toggleActions: "play none none none" },
+          }
+        );
+      });
+    }
   });
 
   return (
