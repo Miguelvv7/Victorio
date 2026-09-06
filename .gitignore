@@ -8,4 +8,8 @@ out/
 *.pem
 npm-debug.log*
 .vercel
-glucotrack/
+tsconfig.tsbuildinfo
+next-env.d.ts
+
+# Herramientas locales, no forman parte de la web
+.claude/

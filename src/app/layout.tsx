@@ -1,31 +1,62 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Antonio } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+
+const antonio = Antonio({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const proximaNova = localFont({
+  src: "../../public/fonts/ProximaNova-Regular.otf",
+  variable: "--font-body",
+  display: "swap",
+});
+
+const SITE = "https://mvictorio.es";
+const DESCRIPTION =
+  "Tengo 21 años y monto webs y tiendas online desde Écija, Sevilla. Cuatro proyectos funcionando, cada uno explicado por dentro.";
 
 export const metadata: Metadata = {
   title: {
-    default: "Miguel Victorio — Desarrollo web en Écija y Sevilla",
+    default: "Miguel Victorio — Monto webs para quien las necesita",
     template: "%s · Miguel Victorio",
   },
-  description: "Desarrollo web freelance en Écija (Sevilla). Shopify a medida, WordPress, automatizaciones con n8n y scraping. Trabajo solo, entrego en 15 días, precio cerrado.",
-  keywords: "desarrollo web Écija, desarrollo web Sevilla, Shopify freelance, tienda online Sevilla, WordPress Écija, automatizaciones n8n, scraping Python",
+  description: DESCRIPTION,
+  keywords: [
+    "portfolio desarrollo web",
+    "hacer web Écija",
+    "tienda online Sevilla",
+    "Shopify freelance",
+    "Next.js",
+    "automatizaciones n8n",
+  ],
   authors: [{ name: "Miguel Victorio" }],
   creator: "Miguel Victorio",
-  metadataBase: new URL("https://mvictorio.es"),
+  metadataBase: new URL(SITE),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Miguel Victorio — Desarrollo web en Écija y Sevilla",
-    description: "Shopify a medida, WordPress y automatizaciones. Trabajo solo, entrego en 15 días, precio cerrado.",
-    url: "https://mvictorio.es",
-    siteName: "Miguel Victorio · Desarrollo Web",
+    title: "Miguel Victorio — Monto webs para quien las necesita",
+    description: DESCRIPTION,
+    url: SITE,
+    siteName: "Miguel Victorio · Portfolio",
     locale: "es_ES",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Miguel Victorio — Desarrollo web en Écija y Sevilla",
-    description: "Shopify a medida, WordPress y automatizaciones. Trabajo solo, entrego en 15 días.",
+    title: "Miguel Victorio — Monto webs para quien las necesita",
+    description: DESCRIPTION,
   },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0c1829",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -34,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${antonio.variable} ${proximaNova.variable}`}>
       <body className="antialiased">{children}</body>
     </html>
   );

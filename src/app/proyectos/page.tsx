@@ -1,186 +1,180 @@
 "use client";
-import Navbar from "@/components/Navbar";
-import FooterSection from "@/sections/FooterSection";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { SplitText, ScrollTrigger, ScrollSmoother } from "gsap/all";
-import { projects } from "@/data/projects";
+
+import { useRef } from "react";
+import Link from "next/link";
 import Image from "next/image";
+import { useGSAP } from "@gsap/react";
+import PageShell from "@/components/PageShell";
+import FooterSection from "@/sections/FooterSection";
+import { gsap, MQ, splitChars, scramble } from "@/lib/motion";
+import { projects, statusLabel } from "@/data/projects";
 
-gsap.registerPlugin(SplitText, ScrollTrigger, ScrollSmoother);
+export default function ProyectosPage() {
+  const ref = useRef<HTMLDivElement>(null);
 
-export default function Proyectos() {
-  useGSAP(() => {
-    if (window.innerWidth >= 768) { ScrollSmoother.create({ smooth: 2, effects: true }); }
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
 
-    // Título con chars stagger
-    const titleSplit = SplitText.create(".projects-page-title", { type: "chars" });
-    gsap.from(titleSplit.chars, {
-      yPercent: 200,
-      stagger: 0.02,
-      ease: "power2.out",
-      duration: 0.9,
-      delay: 0.3,
-    });
+      mm.add(MQ.motion, () => {
+        const split = splitChars(".archive-title");
+        if (split) {
+          gsap.from(split.chars, {
+            yPercent: 118,
+            opacity: 0,
+            stagger: 0.02,
+            duration: 0.9,
+            delay: 0.25,
+            ease: "expo.out",
+            onComplete: () => {
+              scramble(split.chars);
+            },
+          });
+        }
 
-    gsap.to(".projects-page-eyebrow", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      delay: 0.2,
-    });
+        gsap.fromTo(
+          ".archive-eyebrow",
+          { clipPath: "inset(0 100% 0 0)", opacity: 1 },
+          { clipPath: "inset(0 0% 0 0)", duration: 0.8, delay: 0.15, ease: "power3.out" }
+        );
 
-    // Hero scrub tilt
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".projects-page-hero",
-        start: "1% top",
-        end: "bottom top",
-        scrub: true,
-      },
-    }).to(".projects-page-hero", {
-      rotate: 4,
-      scale: 0.92,
-      yPercent: 20,
-      ease: "power1.inOut",
-    });
+        gsap.from(".archive-meta > *", {
+          opacity: 0,
+          y: 14,
+          stagger: 0.08,
+          duration: 0.6,
+          delay: 0.5,
+          ease: "power2.out",
+        });
 
-    // Filas de proyectos: aparecen al entrar en el viewport — SIN scrub
-    // El scrub con "top top" como end no funciona porque la sección está ya en pantalla
-    gsap.from(".proj-row", {
-      opacity: 0,
-      y: 40,
-      stagger: 0.15,
-      ease: "power2.out",
-      duration: 0.7,
-      scrollTrigger: {
-        trigger: ".projects-grid",
-        start: "top 92%",
-      },
-    });
+        /* Tarjetas: entrada por columnas con máscara */
+        gsap.utils.toArray<HTMLElement>(".archive-card").forEach((card, i) => {
+          gsap.fromTo(
+            card,
+            { yPercent: 14, opacity: 0, clipPath: "inset(0 0 100% 0)" },
+            {
+              yPercent: 0,
+              opacity: 1,
+              clipPath: "inset(0 0 0% 0)",
+              duration: 0.9,
+              delay: (i % 2) * 0.08,
+              ease: "expo.out",
+              scrollTrigger: { trigger: card, start: "top 90%", once: true },
+            }
+          );
 
-    // CTA final
-    gsap.from(".proj-cta", {
-      opacity: 0,
-      y: 30,
-      duration: 0.7,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".proj-cta",
-        start: "top 92%",
-      },
-    });
-  });
+          const img = card.querySelector(".archive-card-img");
+          if (img) {
+            gsap.fromTo(
+              img,
+              { yPercent: -8, scale: 1.16 },
+              {
+                yPercent: 8,
+                scale: 1.04,
+                ease: "none",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: true,
+                },
+              }
+            );
+          }
+        });
+
+        gsap.to(".archive-hero", {
+          yPercent: 16,
+          opacity: 0.25,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: ".archive-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        return () => split?.revert();
+      });
+
+      return () => mm.revert();
+    },
+    { scope: ref }
+  );
 
   return (
-    <main>
-      <Navbar />
-      <div id="smooth-wrapper">
-        <div id="smooth-content">
+    <main ref={ref}>
+      <PageShell>
+        <section className="archive-hero">
+          <div className="hero-grid-bg" />
+          <p className="archive-eyebrow" style={{ clipPath: "inset(0 100% 0 0)" }}>
+            Archivo · {projects.length} proyectos
+          </p>
+          <div style={{ overflow: "hidden" }}>
+            <h1 className="archive-title">Trabajo</h1>
+          </div>
+          <div className="archive-meta">
+            <p>Tiendas, interfaces y automatizaciones construidas de principio a fin.</p>
+            <p>Cada ficha explica qué había, qué hice y con qué.</p>
+          </div>
+        </section>
 
-          {/* HERO */}
-          <section className="projects-page-hero relative bg-black w-screen min-h-[60vh] flex flex-col justify-center px-6 md:px-10 overflow-hidden">
-            <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-              style={{
-                backgroundImage: "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
-                backgroundSize: "80px 80px",
-              }}
-            />
-            <p
-              className="projects-page-eyebrow font-paragraph text-white/30 text-sm uppercase tracking-[0.2em] mb-6"
-              style={{ opacity: 0, transform: "translateY(8px)" }}
+        <section className="archive-grid">
+          {projects.map((project, i) => (
+            <Link
+              key={project.slug}
+              href={`/proyectos/${project.slug}`}
+              className="archive-card"
             >
-              Proyectos seleccionados
-            </p>
-            <div className="overflow-hidden">
-              <h1
-                className="projects-page-title text-white font-bold uppercase tracking-tighter leading-[0.9]"
-                style={{ fontSize: "clamp(3rem, 10vw, 9rem)" }}
-              >
-                Trabajo.
-              </h1>
-            </div>
-          </section>
-
-          {/* GRID */}
-          <section className="projects-grid bg-black px-6 md:px-10 pb-32 pt-8">
-            <div className="max-w-5xl mx-auto flex flex-col">
-              {projects.map((project) => {
-                const inner = (
-                  <>
-                    <div className="flex items-center gap-6 md:gap-10">
-                      <span className="text-white/20 font-bold text-2xl md:text-4xl w-12 shrink-0 leading-none">
-                        {project.num}
-                      </span>
-                      <div>
-                        <h2
-                          className="text-white font-bold uppercase tracking-tighter leading-none group-hover:text-blue-400 transition-colors"
-                          style={{ fontSize: "clamp(1.5rem, 4vw, 4rem)" }}
-                        >
-                          {project.title}
-                        </h2>
-                        <p className="text-white/30 text-sm mt-2" style={{ fontFamily: "ProximaNova, sans-serif" }}>
-                          {project.tagline}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p style={{ fontFamily:"ProximaNova,sans-serif", color:"#60a5fa", textTransform:"uppercase", letterSpacing:"0.1em", fontSize:"0.7rem" }}>
-                        {project.category}
-                      </p>
-                      <p className="text-white/20 text-xs" style={{ fontFamily: "ProximaNova, sans-serif" }}>
-                        {project.year}
-                      </p>
-                      <span className="text-xs uppercase tracking-widest mt-2 block transition-colors" style={{ fontFamily: "ProximaNova, sans-serif", color: project.wip ? "#60a5fa" : "rgba(255,255,255,0.3)" }}>
-                        {project.wip ? "En desarrollo" : "Ver →"}
-                      </span>
-                    </div>
-                  </>
-                );
-
-                return project.wip
-                  ? (
-                    <div key={project.slug} className="proj-row border-t border-white/10 py-8 flex items-center justify-between gap-6" style={{ cursor: "default" }}>
-                      {inner}
-                    </div>
-                  )
-                  : (
-                    <a key={project.slug} href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-                      className="proj-row group border-t border-white/10 py-8 flex items-center justify-between gap-6 hover:border-white/30 transition-colors">
-                      {inner}
-                    </a>
-                  );
-              })}
-              <div className="border-t border-blue-900/20" />
-            </div>
-
-            {/* CTA */}
-            <div className="proj-cta max-w-5xl mx-auto mt-20 border border-blue-900/20 p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div>
-                <p
-                  className="text-white/30 text-xs uppercase tracking-widest mb-2"
-                  style={{ fontFamily: "ProximaNova, sans-serif" }}
+              <div className="archive-card-media">
+                <Image
+                  src={project.cover}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 899px) 92vw, 46vw"
+                  className="archive-card-img"
+                />
+                <span
+                  className="archive-card-status"
+                  style={{ borderColor: project.accent, color: project.accent }}
                 >
-                  ¿Tu proyecto aquí?
-                </p>
-                <h3 className="text-white font-bold uppercase tracking-tighter"
-                  style={{ fontSize: "clamp(1.5rem, 3vw, 3rem)" }}>
-                  Disponible para 2026
-                </h3>
+                  {statusLabel[project.status]}
+                </span>
               </div>
-              <a
-                href="mailto:miguelvictorio72@gmail.com"
-                className="border border-white text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-white hover:text-black transition-all whitespace-nowrap"
-                style={{ fontFamily: "ProximaNova, sans-serif" }}
-              >
-                Hablamos →
-              </a>
-            </div>
-          </section>
 
-          <FooterSection />
-        </div>
-      </div>
+              <div className="archive-card-body">
+                <span className="archive-card-num">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h2 className="archive-card-title">{project.title}</h2>
+                  <p className="archive-card-tagline">{project.tagline}</p>
+                  <p className="archive-card-goal">{project.goal}</p>
+                  <ul className="archive-card-stack">
+                    {project.stack.slice(0, 4).map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                </div>
+                <span className="archive-card-arrow" aria-hidden>
+                  →
+                </span>
+              </div>
+            </Link>
+          ))}
+        </section>
+
+        <section className="archive-cta">
+          <div>
+            <p className="archive-cta-eyebrow">Hueco libre</p>
+            <h3 className="archive-cta-title">Tu proyecto, el siguiente</h3>
+          </div>
+          <a href="mailto:miguelvictorio72@gmail.com" className="archive-cta-btn">
+            Hablamos <span aria-hidden>→</span>
+          </a>
+        </section>
+
+        <FooterSection />
+      </PageShell>
     </main>
   );
 }
