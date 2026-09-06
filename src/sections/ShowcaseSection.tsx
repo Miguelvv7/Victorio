@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { gsap, MQ, splitChars } from "@/lib/motion";
+import { gsap, MQ, ScrollTrigger, splitChars, revealOnView } from "@/lib/motion";
 import { featuredProjects, statusLabel } from "@/data/projects";
 
 /**
@@ -28,6 +28,7 @@ const ShowcaseSection = () => {
           if (!track || !section || reduce) return;
 
           const distance = () => track.scrollWidth - window.innerWidth;
+          const seguros: number[] = [];
 
           const tl = gsap.timeline({
             scrollTrigger: {
@@ -77,47 +78,62 @@ const ShowcaseSection = () => {
               }
             );
 
-            gsap.from(card.querySelectorAll(".sc-card-reveal"), {
-              yPercent: 60,
-              opacity: 0,
-              duration: 0.6,
-              stagger: 0.08,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: card,
-                containerAnimation: tl,
-                start: "left 78%",
-                once: true,
-              },
+            /* Esta sí necesita ScrollTrigger: el recorrido es horizontal
+               dentro de la sección con pin, y eso solo lo sabe la timeline. */
+            const textos = card.querySelectorAll<HTMLElement>(".sc-card-reveal");
+            gsap.set(textos, { yPercent: 60, opacity: 0 });
+
+            const mostrar = () =>
+              gsap.to(textos, {
+                yPercent: 0,
+                opacity: 1,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
+
+            ScrollTrigger.create({
+              trigger: card,
+              containerAnimation: tl,
+              start: "left 78%",
+              once: true,
+              onEnter: mostrar,
             });
+
+            /* Red de seguridad: si por lo que sea el disparador no llega a
+               saltar, el texto de la tarjeta se muestra igualmente. */
+            seguros.push(
+              window.setTimeout(() => {
+                if (getComputedStyle(textos[0]).opacity === "0") mostrar();
+              }, 6000)
+            );
           });
+
+          return () => seguros.forEach((id) => window.clearTimeout(id));
         }
       );
 
       /* Título de la sección */
       mm.add(MQ.motion, () => {
+        const raiz = ref.current;
+        const limpiezas: Array<() => void> = [];
         const split = splitChars(".sc-title");
         if (split) {
-          gsap.from(split.chars, {
-            yPercent: 115,
-            opacity: 0,
-            stagger: 0.02,
-            duration: 0.8,
-            ease: "expo.out",
-            scrollTrigger: { trigger: ref.current, start: "top 75%", once: true },
-          });
+          limpiezas.push(
+            revealOnView(raiz, split.chars,
+              { yPercent: 115, opacity: 0 },
+              { duration: 0.8, ease: "expo.out" }, { stagger: 0.02 })
+          );
         }
-        gsap.fromTo(
-          ".sc-title-badge",
-          { clipPath: "inset(0 100% 0 0)" },
-          {
-            clipPath: "inset(0 0% 0 0)",
-            duration: 0.8,
-            ease: "expo.out",
-            scrollTrigger: { trigger: ref.current, start: "top 75%", once: true },
-          }
+        limpiezas.push(
+          revealOnView(raiz, raiz?.querySelector(".sc-title-badge"),
+            { clipPath: "inset(0 100% 0 0)" }, { duration: 0.8, ease: "expo.out" })
         );
-        return () => split?.revert();
+        return () => {
+          limpiezas.forEach((fn) => fn());
+          split?.revert();
+        };
       });
 
       return () => mm.revert();

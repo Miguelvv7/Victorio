@@ -90,6 +90,107 @@ export function scramble(chars: Element[], speed = 45) {
   return () => timers.forEach(clearInterval);
 }
 
+
+type Objetivos = Element | Element[] | NodeListOf<Element> | null | undefined;
+
+function comoLista(t: Objetivos): Element[] {
+  if (!t) return [];
+  if (t instanceof Element) return [t];
+  return Array.from(t as ArrayLike<Element>);
+}
+
+/**
+ * Aparición al entrar en pantalla, una sola vez.
+ *
+ * Usa IntersectionObserver en vez de ScrollTrigger a propósito: estas
+ * animaciones no dependen del scroll, solo de que el elemento se vea. Con
+ * ScrollTrigger quedaban a merced de las medidas de la página (secciones con
+ * pin, imágenes que cargan tarde, el preloader que aplasta el contenido) y
+ * cualquier medida mal tomada dejaba el bloque invisible para siempre.
+ *
+ * @param vigilar  elemento cuya visibilidad dispara la animación
+ * @param objetivos elementos que se animan, en orden
+ */
+export function revealOnView(
+  vigilar: Element | null | undefined,
+  objetivos: Objetivos,
+  desde: gsap.TweenVars,
+  hasta: gsap.TweenVars = {},
+  opciones: { stagger?: number } = {}
+): () => void {
+  const els = comoLista(objetivos);
+  if (!vigilar || !els.length) return () => {};
+
+  const final: gsap.TweenVars = {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    xPercent: 0,
+    yPercent: 0,
+    scale: 1,
+    scaleX: 1,
+    clipPath: "inset(0% 0% 0% 0%)",
+    duration: 0.75,
+    ease: "power3.out",
+    ...hasta,
+  };
+
+  /* Solo devolvemos al estado neutro las propiedades que se tocaron */
+  Object.keys(final).forEach((k) => {
+    if (!(k in desde) && !(k in hasta) && k !== "duration" && k !== "ease") {
+      delete final[k];
+    }
+  });
+
+  if (prefersReducedMotion()) {
+    gsap.set(els, { ...final, duration: 0, delay: 0 });
+    return () => {};
+  }
+
+  gsap.set(els, desde);
+
+  const { stagger = 0.08 } = opciones;
+  let hecho = false;
+  let reintento = 0;
+  let temporizador = 0;
+
+  const revelar = () => {
+    if (hecho) return;
+    hecho = true;
+    io.disconnect();
+    window.clearTimeout(temporizador);
+    gsap.to(els, { ...final, stagger });
+  };
+
+  /* Sin margen negativo a propósito: recortar la parte de abajo dejaba sin
+     revelar cualquier bloque que termine pegado al pie de la página, porque
+     nunca llega a entrar en la zona reducida. */
+  const io = new IntersectionObserver(
+    (entradas) => {
+      if (entradas.some((e) => e.isIntersecting)) revelar();
+    },
+    { rootMargin: "0px", threshold: 0 }
+  );
+
+  io.observe(vigilar);
+
+  /* Red de seguridad: si el observador no llegara a dispararse, se comprueba
+     unas cuantas veces si el elemento está a la vista y se muestra igual. */
+  const comprobar = () => {
+    if (hecho) return;
+    const r = vigilar.getBoundingClientRect();
+    const visible = r.top < window.innerHeight && r.bottom > 0 && r.height > 0;
+    if (visible) return revelar();
+    if (++reintento < 12) temporizador = window.setTimeout(comprobar, 1200);
+  };
+  temporizador = window.setTimeout(comprobar, 1500);
+
+  return () => {
+    io.disconnect();
+    window.clearTimeout(temporizador);
+  };
+}
+
 /**
  * Inclina los elementos indicados según la velocidad de scroll.
  * Funciona igual con rueda y con gesto táctil.
@@ -125,4 +226,4 @@ export function refreshOnLoad() {
   return () => window.removeEventListener("load", refresh);
 }
 
-export { gsap, ScrollTrigger };
+export { gsap, ScrollTrigger, ScrollSmoother };

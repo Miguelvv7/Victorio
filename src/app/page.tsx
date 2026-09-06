@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ScrollTrigger } from "@/lib/motion";
 import Preloader from "@/components/Preloader";
-import PageShell from "@/components/PageShell";
 import StackMarquee from "@/components/StackMarquee";
 import HeroSection from "@/sections/HeroSection";
 import ManifestoSection from "@/sections/ManifestoSection";
@@ -31,12 +31,27 @@ export default function Home() {
     };
   }, []);
 
+  /* Mientras el preloader está puesto, el contenido vive aplastado a la altura
+     de la ventana y con overflow oculto: los ScrollTrigger que se crean en ese
+     momento miden mal y sus secciones no llegaban a aparecer nunca. En cuanto
+     el preloader se va, se recalculan todas las medidas. */
+  useEffect(() => {
+    if (!isPreloaderDone) return;
+    const refrescar = () => ScrollTrigger.refresh();
+    refrescar();
+    const t1 = window.setTimeout(refrescar, 200);
+    const t2 = window.setTimeout(refrescar, 800);
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
+  }, [isPreloaderDone]);
+
   return (
     <main>
       <Preloader isLoaded={isLoaded} onFinish={() => setIsPreloaderDone(true)} />
 
       <div className={isPreloaderDone ? "page-ready" : "page-hidden"}>
-        <PageShell navReady={isPreloaderDone}>
           <HeroSection triggerAnimation={isPreloaderDone} />
           <StackMarquee />
           <ManifestoSection />
@@ -44,7 +59,6 @@ export default function Home() {
           <CapabilitiesSection />
           <ProjectIndexSection />
           <FooterSection />
-        </PageShell>
       </div>
     </main>
   );

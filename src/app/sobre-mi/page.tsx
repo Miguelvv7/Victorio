@@ -4,9 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import PageShell from "@/components/PageShell";
 import FooterSection from "@/sections/FooterSection";
-import { gsap, MQ, splitChars, splitLines, scramble } from "@/lib/motion";
+import { gsap, MQ, splitChars, splitLines, scramble, revealOnView } from "@/lib/motion";
 import { porqueYo, steps, stack, noHago, sectors } from "@/data/projects";
 
 const BIO = [
@@ -24,6 +23,7 @@ export default function SobreMi() {
       const mm = gsap.matchMedia();
 
       mm.add(MQ.motion, () => {
+        const limpiezas: Array<() => void> = [];
         const title = splitChars(".ab-title");
         const tl = gsap.timeline({ delay: 0.2 });
 
@@ -93,51 +93,35 @@ export default function SobreMi() {
           );
         }
 
-        gsap.from(".ab-chip", {
-          opacity: 0,
-          y: 14,
-          scale: 0.9,
-          stagger: 0.025,
-          duration: 0.45,
-          ease: "back.out(1.7)",
-          scrollTrigger: { trigger: ".ab-stack", start: "top 88%", once: true },
-        });
+        const raiz = ref.current;
+        const q = (sel: string) => raiz?.querySelector(sel);
+        const qs = (sel: string) => raiz?.querySelectorAll(sel);
 
-        gsap.from(".ab-principle", {
-          opacity: 0,
-          y: 34,
-          stagger: 0.1,
-          duration: 0.75,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".ab-principles", start: "top 85%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".ab-stack"), qs(".ab-chip"),
+            { opacity: 0, y: 14, scale: 0.9 },
+            { duration: 0.45, ease: "back.out(1.7)" }, { stagger: 0.025 })
+        );
 
-        gsap.from(".ab-step", {
-          opacity: 0,
-          x: -26,
-          stagger: 0.12,
-          duration: 0.7,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".ab-process", start: "top 85%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".ab-principles"), qs(".ab-principle"),
+            { opacity: 0, y: 34 }, { duration: 0.75 }, { stagger: 0.1 })
+        );
 
-        gsap.from(".ab-line", {
-          scaleX: 0,
-          transformOrigin: "left",
-          stagger: 0.08,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".ab-process", start: "top 88%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".ab-process"), qs(".ab-step"),
+            { opacity: 0, x: -26 }, { duration: 0.7 }, { stagger: 0.12 })
+        );
 
-        gsap.from(".ab-limit", {
-          opacity: 0,
-          y: 20,
-          stagger: 0.09,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: { trigger: ".ab-limits", start: "top 88%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".ab-process"), qs(".ab-line"),
+            { scaleX: 0, transformOrigin: "left" }, { duration: 0.9 }, { stagger: 0.08 })
+        );
+
+        limpiezas.push(
+          revealOnView(q(".ab-limits"), qs(".ab-limit"),
+            { opacity: 0, y: 20 }, { duration: 0.6 }, { stagger: 0.09 })
+        );
 
         gsap.to(".ab-watermark", {
           xPercent: -12,
@@ -151,6 +135,7 @@ export default function SobreMi() {
         });
 
         return () => {
+          limpiezas.forEach((fn) => fn());
           title?.revert();
           bio?.revert();
         };
@@ -163,7 +148,6 @@ export default function SobreMi() {
 
   return (
     <main ref={ref}>
-      <PageShell>
         <section className="ab-hero">
           <div className="hero-grid-bg" />
 
@@ -289,7 +273,6 @@ export default function SobreMi() {
         </section>
 
         <FooterSection />
-      </PageShell>
     </main>
   );
 }

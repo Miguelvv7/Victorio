@@ -2,9 +2,8 @@
 
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
-import PageShell from "@/components/PageShell";
 import FooterSection from "@/sections/FooterSection";
-import { gsap, MQ, splitChars, scramble } from "@/lib/motion";
+import { gsap, MQ, splitChars, scramble, revealOnView } from "@/lib/motion";
 import { faqs } from "@/data/projects";
 
 const EMAIL = "miguelvictorio72@gmail.com";
@@ -50,6 +49,7 @@ export default function ContactoPage() {
       const mm = gsap.matchMedia();
 
       mm.add(MQ.motion, () => {
+        const limpiezas: Array<() => void> = [];
         const title = splitChars(".ct-title");
         const tl = gsap.timeline({ delay: 0.2 });
 
@@ -86,23 +86,15 @@ export default function ContactoPage() {
           "-=0.35"
         );
 
-        gsap.from(".ct-field", {
-          opacity: 0,
-          y: 24,
-          stagger: 0.08,
-          duration: 0.65,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".ct-form", start: "top 85%", once: true },
-        });
-
-        gsap.from(".ct-faq-item", {
-          opacity: 0,
-          y: 22,
-          stagger: 0.08,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".ct-faqs", start: "top 88%", once: true },
-        });
+        const raiz = ref.current;
+        limpiezas.push(
+          revealOnView(raiz?.querySelector(".ct-form"), raiz?.querySelectorAll(".ct-field"),
+            { opacity: 0, y: 24 }, { duration: 0.65 }, { stagger: 0.08 })
+        );
+        limpiezas.push(
+          revealOnView(raiz?.querySelector(".ct-faqs"), raiz?.querySelectorAll(".ct-faq-item"),
+            { opacity: 0, y: 22 }, { duration: 0.6 }, { stagger: 0.08 })
+        );
 
         gsap.to(".ct-watermark", {
           xPercent: -10,
@@ -115,7 +107,10 @@ export default function ContactoPage() {
           },
         });
 
-        return () => title?.revert();
+        return () => {
+          limpiezas.forEach((fn) => fn());
+          title?.revert();
+        };
       });
 
       return () => mm.revert();
@@ -125,7 +120,6 @@ export default function ContactoPage() {
 
   return (
     <main ref={ref}>
-      <PageShell>
         <section className="ct-hero">
           <div className="hero-grid-bg" />
           <p className="ct-eyebrow" style={{ clipPath: "inset(0 100% 0 0)" }}>
@@ -243,7 +237,6 @@ export default function ContactoPage() {
         </section>
 
         <FooterSection />
-      </PageShell>
     </main>
   );
 }

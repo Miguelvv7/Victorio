@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap, MQ, splitChars } from "@/lib/motion";
+import { gsap, MQ, splitChars, revealOnView } from "@/lib/motion";
 
 const EMAIL = "miguelvictorio72@gmail.com";
 
@@ -21,6 +21,11 @@ const FooterSection = () => {
       const mm = gsap.matchMedia();
 
       mm.add(MQ.motion, () => {
+        const raiz = ref.current;
+        const q = (sel: string) => raiz?.querySelector(sel);
+        const qs = (sel: string) => raiz?.querySelectorAll(sel);
+        const limpiezas: Array<() => void> = [];
+
         gsap.to(".footer-watermark", {
           yPercent: -22,
           ease: "none",
@@ -32,68 +37,44 @@ const FooterSection = () => {
           },
         });
 
-        gsap.from(".footer-top-line", {
-          scaleX: 0,
-          transformOrigin: "left",
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ref.current, start: "top 92%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(raiz, q(".footer-top-line"),
+            { scaleX: 0, transformOrigin: "left" }, { duration: 1 })
+        );
 
-        gsap.fromTo(
-          ".footer-eyebrow",
-          { clipPath: "inset(0 100% 0 0)", opacity: 1 },
-          {
-            clipPath: "inset(0 0% 0 0)",
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: ".footer-cta-block", start: "top 90%", once: true },
-          }
+        limpiezas.push(
+          revealOnView(q(".footer-cta-block"), q(".footer-eyebrow"),
+            { clipPath: "inset(0 100% 0 0)", opacity: 1 }, { duration: 0.9 })
         );
 
         const split = splitChars(".footer-email");
         if (split) {
-          gsap.from(split.chars, {
-            yPercent: 110,
-            opacity: 0,
-            stagger: 0.018,
-            duration: 0.7,
-            ease: "expo.out",
-            scrollTrigger: { trigger: ".footer-email", start: "top 92%", once: true },
-          });
+          limpiezas.push(
+            revealOnView(q(".footer-email"), split.chars,
+              { yPercent: 110, opacity: 0 },
+              { duration: 0.7, ease: "expo.out" }, { stagger: 0.018 })
+          );
         }
 
-        gsap.fromTo(
-          ".footer-note",
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            delay: 0.35,
-            ease: "power2.out",
-            scrollTrigger: { trigger: ".footer-email", start: "top 92%", once: true },
-          }
+        limpiezas.push(
+          revealOnView(q(".footer-email"), q(".footer-note"),
+            { opacity: 0, y: 12 }, { duration: 0.6, delay: 0.35 })
         );
 
-        gsap.from(".footer-link", {
-          opacity: 0,
-          y: 12,
-          stagger: 0.07,
-          duration: 0.5,
-          ease: "power2.out",
-          scrollTrigger: { trigger: ".footer-nav", start: "top 95%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".footer-nav"), qs(".footer-link"),
+            { opacity: 0, y: 12 }, { duration: 0.5 }, { stagger: 0.07 })
+        );
 
-        gsap.from(".footer-legal", {
-          opacity: 0,
-          y: 8,
-          duration: 0.5,
-          ease: "power2.out",
-          scrollTrigger: { trigger: ".footer-legal", start: "top 99%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".footer-legal"), q(".footer-legal"),
+            { opacity: 0, y: 8 }, { duration: 0.5 })
+        );
 
-        return () => split?.revert();
+        return () => {
+          limpiezas.forEach((fn) => fn());
+          split?.revert();
+        };
       });
 
       return () => mm.revert();
