@@ -1,20 +1,15 @@
 "use client";
-import Navbar from "@/components/Navbar";
-import Preloader from "@/components/Preloader";
-import HeroSection from "@/sections/HeroSection";
-import MessageSection from "@/sections/MessageSection";
-import StackMarquee from "@/components/StackMarquee";
-import ProjectsSection from "@/sections/ProjectsSection";
-import CinematicServicesSection from "@/sections/CinematicServicesSection";
-import ProcessSection from "@/sections/ProcessSection";
-import WorkTitleSection from "@/sections/WorkTitleSection";
-import FooterSection from "@/sections/FooterSection";
-import gsap from "gsap";
-import { ScrollTrigger, ScrollSmoother, SplitText } from "gsap/all";
-import { useGSAP } from "@gsap/react";
-import { useState, useEffect } from "react";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+import { useEffect, useState } from "react";
+import Preloader from "@/components/Preloader";
+import PageShell from "@/components/PageShell";
+import StackMarquee from "@/components/StackMarquee";
+import HeroSection from "@/sections/HeroSection";
+import ManifestoSection from "@/sections/ManifestoSection";
+import ShowcaseSection from "@/sections/ShowcaseSection";
+import CapabilitiesSection from "@/sections/CapabilitiesSection";
+import ProjectIndexSection from "@/sections/ProjectIndexSection";
+import FooterSection from "@/sections/FooterSection";
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,33 +18,33 @@ export default function Home() {
   useEffect(() => {
     window.history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
-    const t = setTimeout(() => setIsLoaded(true), 2200);
-    return () => clearTimeout(t);
-  }, []);
+    let cancelled = false;
+    const finish = () => !cancelled && setIsLoaded(true);
 
-  useGSAP(() => {
-    if (window.innerWidth >= 768) {
-      ScrollSmoother.create({ smooth: 2, effects: true });
-    }
-  });
+    /* Espera a las fuentes (evita reventar los SplitText) con tope de 1,6 s */
+    const timeout = setTimeout(finish, 1600);
+    document.fonts?.ready.then(finish).catch(finish);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <main>
       <Preloader isLoaded={isLoaded} onFinish={() => setIsPreloaderDone(true)} />
-      <div className={!isPreloaderDone ? "h-screen overflow-hidden opacity-0" : "opacity-100 transition-opacity duration-500"}>
-        <Navbar />
-        <div id="smooth-wrapper">
-          <div id="smooth-content">
-            <HeroSection triggerAnimation={isPreloaderDone} />
-            <StackMarquee />
-            <MessageSection />
-            <ProjectsSection />
-            <CinematicServicesSection />
-            <ProcessSection />
-            <WorkTitleSection />
-            <FooterSection />
-          </div>
-        </div>
+
+      <div className={isPreloaderDone ? "page-ready" : "page-hidden"}>
+        <PageShell navReady={isPreloaderDone}>
+          <HeroSection triggerAnimation={isPreloaderDone} />
+          <StackMarquee />
+          <ManifestoSection />
+          <ShowcaseSection />
+          <CapabilitiesSection />
+          <ProjectIndexSection />
+          <FooterSection />
+        </PageShell>
       </div>
     </main>
   );

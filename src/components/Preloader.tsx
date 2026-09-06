@@ -16,8 +16,8 @@ const Preloader: React.FC<PreloaderProps> = ({ isLoaded, onFinish }) => {
     let interval: ReturnType<typeof setInterval>;
     if (!isLoaded) {
       interval = setInterval(
-        () => setProgress((p) => (p < 90 ? p + Math.random() * 3.5 : p)),
-        100
+        () => setProgress((p) => (p < 92 ? p + Math.random() * 7 : p)),
+        70
       );
     } else {
       setProgress(100);
@@ -30,16 +30,21 @@ const Preloader: React.FC<PreloaderProps> = ({ isLoaded, onFinish }) => {
     if (!isLoaded || progress < 100 || !containerRef.current) return;
 
     gsap
-      .timeline({ delay: 0.3, onComplete: () => setDisplay(false) })
-      .to(logoRef.current, { y: -28, opacity: 0, duration: 0.65, ease: "power2.in" })
+      .timeline({ delay: 0.15, onComplete: () => setDisplay(false) })
+      .to(logoRef.current, { y: -28, opacity: 0, duration: 0.45, ease: "power2.in" })
       .to(
         ".pl-label-loading, .pl-label-percent, .pl-shadow-loading, .pl-shadow-percent",
-        { opacity: 0, duration: 0.4, stagger: 0.04, ease: "power2.in" },
+        { opacity: 0, duration: 0.3, stagger: 0.03, ease: "power2.in" },
+        "<"
+      )
+      .to(
+        ".pl-bar",
+        { scaleX: 1, duration: 0.35, ease: "power2.inOut" },
         "<"
       )
       .to(
         containerRef.current,
-        { yPercent: -100, duration: 1.05, ease: "power4.inOut", onComplete: onFinish },
+        { yPercent: -100, duration: 0.85, ease: "power4.inOut", onComplete: onFinish },
         "-=0.1"
       );
   }, { dependencies: [isLoaded, progress], scope: containerRef });
@@ -60,6 +65,8 @@ const Preloader: React.FC<PreloaderProps> = ({ isLoaded, onFinish }) => {
       <div ref={logoRef} className="pl-logo">
         MV<span style={{ color: "#60a5fa" }}>.</span>
       </div>
+
+      <div className="pl-bar" />
 
       {/* ── Derecha ── */}
       <div className="pl-right">
