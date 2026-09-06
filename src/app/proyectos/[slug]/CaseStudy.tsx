@@ -4,9 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import PageShell from "@/components/PageShell";
 import FooterSection from "@/sections/FooterSection";
-import { gsap, MQ, splitChars, splitLines, scramble } from "@/lib/motion";
+import { gsap, MQ, splitChars, splitLines, scramble, revealOnView } from "@/lib/motion";
 import { statusLabel, type Project } from "@/data/projects";
 
 interface CaseStudyProps {
@@ -22,6 +21,7 @@ export default function CaseStudy({ project, next }: CaseStudyProps) {
       const mm = gsap.matchMedia();
 
       mm.add(MQ.motion, () => {
+        const limpiezas: Array<() => void> = [];
         const title = splitChars(".cs-title");
         const summary = splitLines(".cs-summary p");
 
@@ -79,84 +79,58 @@ export default function CaseStudy({ project, next }: CaseStudyProps) {
           },
         });
 
+        const raiz = ref.current;
+        const q = (sel: string) => raiz?.querySelector(sel);
+        const qs = (sel: string) => raiz?.querySelectorAll(sel);
+
         if (summary) {
-          gsap.from(summary.lines, {
-            yPercent: 110,
-            opacity: 0,
-            stagger: 0.08,
-            duration: 0.8,
-            ease: "expo.out",
-            scrollTrigger: { trigger: ".cs-summary", start: "top 88%", once: true },
-          });
+          limpiezas.push(
+            revealOnView(q(".cs-summary"), summary.lines,
+              { yPercent: 110, opacity: 0 },
+              { duration: 0.8, ease: "expo.out" }, { stagger: 0.08 })
+          );
         }
 
         const goal = splitLines(".cs-goal-text");
         if (goal) {
-          gsap.from(goal.lines, {
-            yPercent: 110,
-            opacity: 0,
-            stagger: 0.07,
-            duration: 0.85,
-            ease: "expo.out",
-            scrollTrigger: { trigger: ".cs-goal", start: "top 85%", once: true },
-          });
+          limpiezas.push(
+            revealOnView(q(".cs-goal"), goal.lines,
+              { yPercent: 110, opacity: 0 },
+              { duration: 0.85, ease: "expo.out" }, { stagger: 0.07 })
+          );
         }
 
-        gsap.from(".cs-context", {
-          opacity: 0,
-          y: 22,
-          duration: 0.7,
-          delay: 0.25,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".cs-goal", start: "top 85%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".cs-goal"), q(".cs-context"),
+            { opacity: 0, y: 22 }, { duration: 0.7, delay: 0.25 })
+        );
 
-        gsap.from(".cs-outcome", {
-          opacity: 0,
-          y: 26,
-          duration: 0.7,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".cs-outcome", start: "top 92%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".cs-outcome"), q(".cs-outcome"),
+            { opacity: 0, y: 26 }, { duration: 0.7 })
+        );
 
-        gsap.from(".cs-spec-row", {
-          opacity: 0,
-          x: -20,
-          stagger: 0.07,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".cs-specs", start: "top 88%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".cs-specs"), qs(".cs-spec-row"),
+            { opacity: 0, x: -20 }, { duration: 0.6 }, { stagger: 0.07 })
+        );
 
-        gsap.from(".cs-chip", {
-          opacity: 0,
-          scale: 0.85,
-          y: 10,
-          stagger: 0.04,
-          duration: 0.45,
-          ease: "back.out(1.7)",
-          scrollTrigger: { trigger: ".cs-stack", start: "top 92%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".cs-stack"), qs(".cs-chip"),
+            { opacity: 0, scale: 0.85, y: 10 },
+            { duration: 0.45, ease: "back.out(1.7)" }, { stagger: 0.04 })
+        );
 
-        gsap.from(".cs-highlight", {
-          opacity: 0,
-          y: 26,
-          stagger: 0.09,
-          duration: 0.65,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".cs-highlights", start: "top 88%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".cs-highlights"), qs(".cs-highlight"),
+            { opacity: 0, y: 26 }, { duration: 0.65 }, { stagger: 0.09 })
+        );
 
-        gsap.utils.toArray<HTMLElement>(".cs-shot").forEach((shot) => {
-          gsap.fromTo(
-            shot,
-            { clipPath: "inset(0 0 100% 0)" },
-            {
-              clipPath: "inset(0 0 0% 0)",
-              duration: 1,
-              ease: "expo.out",
-              scrollTrigger: { trigger: shot, start: "top 90%", once: true },
-            }
+        raiz?.querySelectorAll<HTMLElement>(".cs-shot").forEach((shot) => {
+          limpiezas.push(
+            revealOnView(shot, shot,
+              { clipPath: "inset(0 0 100% 0)" },
+              { duration: 1, ease: "expo.out" }, { stagger: 0 })
           );
           gsap.fromTo(
             shot.querySelector("img"),
@@ -169,27 +143,22 @@ export default function CaseStudy({ project, next }: CaseStudyProps) {
           );
         });
 
-        gsap.from(".cs-gallery-note", {
-          opacity: 0,
-          y: 16,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: { trigger: ".cs-gallery-note", start: "top 95%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(q(".cs-gallery-note"), q(".cs-gallery-note"),
+            { opacity: 0, y: 16 }, { duration: 0.6 })
+        );
 
         const nextTitle = splitChars(".cs-next-title");
         if (nextTitle) {
-          gsap.from(nextTitle.chars, {
-            yPercent: 115,
-            opacity: 0,
-            stagger: 0.02,
-            duration: 0.8,
-            ease: "expo.out",
-            scrollTrigger: { trigger: ".cs-next", start: "top 85%", once: true },
-          });
+          limpiezas.push(
+            revealOnView(q(".cs-next"), nextTitle.chars,
+              { yPercent: 115, opacity: 0 },
+              { duration: 0.8, ease: "expo.out" }, { stagger: 0.02 })
+          );
         }
 
         return () => {
+          limpiezas.forEach((fn) => fn());
           title?.revert();
           summary?.revert();
           goal?.revert();
@@ -204,7 +173,6 @@ export default function CaseStudy({ project, next }: CaseStudyProps) {
 
   return (
     <main ref={ref} style={{ ["--accent" as string]: project.accent }}>
-      <PageShell>
         <article className="case-study">
           <header className="cs-hero">
             <div className="hero-grid-bg" />
@@ -355,7 +323,6 @@ export default function CaseStudy({ project, next }: CaseStudyProps) {
         </article>
 
         <FooterSection />
-      </PageShell>
     </main>
   );
 }

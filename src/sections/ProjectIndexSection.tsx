@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { gsap, MQ, splitChars } from "@/lib/motion";
+import { gsap, MQ, splitChars, revealOnView } from "@/lib/motion";
 import { projects, statusLabel } from "@/data/projects";
 
 /**
@@ -14,41 +15,54 @@ import { projects, statusLabel } from "@/data/projects";
 const ProjectIndexSection = () => {
   const ref = useRef<HTMLElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const [montado, setMontado] = useState(false);
+
+  /* La vista previa se pinta en <body>, fuera de #smooth-content: dentro de un
+     elemento con transform, `position: fixed` deja de referirse a la ventana y
+     la miniatura se iba a miles de píxeles de distancia. */
+  useEffect(() => setMontado(true), []);
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
 
       mm.add(MQ.motion, () => {
+        const raiz = ref.current;
+        const q = (sel: string) => raiz?.querySelectorAll(sel);
+        const limpiezas: Array<() => void> = [];
+
         const split = splitChars(".idx-title");
         if (split) {
-          gsap.from(split.chars, {
-            yPercent: 115,
-            opacity: 0,
-            stagger: 0.02,
-            duration: 0.75,
-            ease: "expo.out",
-            scrollTrigger: { trigger: ".idx-head", start: "top 85%", once: true },
-          });
+          limpiezas.push(
+            revealOnView(
+              raiz?.querySelector(".idx-head"),
+              split.chars,
+              { yPercent: 115, opacity: 0 },
+              { duration: 0.75, ease: "expo.out" },
+              { stagger: 0.02 }
+            )
+          );
         }
 
-        gsap.from(".idx-line", {
-          scaleX: 0,
-          transformOrigin: "left",
-          stagger: 0.08,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".idx-list", start: "top 88%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(
+            raiz?.querySelector(".idx-list"),
+            q(".idx-line"),
+            { scaleX: 0, transformOrigin: "left" },
+            { duration: 0.8 },
+            { stagger: 0.08 }
+          )
+        );
 
-        gsap.from(".idx-row-inner", {
-          yPercent: 60,
-          opacity: 0,
-          stagger: 0.09,
-          duration: 0.7,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".idx-list", start: "top 88%", once: true },
-        });
+        limpiezas.push(
+          revealOnView(
+            raiz?.querySelector(".idx-list"),
+            q(".idx-row-inner"),
+            { yPercent: 60, opacity: 0 },
+            { duration: 0.7 },
+            { stagger: 0.09 }
+          )
+        );
 
         gsap.to(".idx-watermark", {
           xPercent: -14,
@@ -61,7 +75,10 @@ const ProjectIndexSection = () => {
           },
         });
 
-        return () => split?.revert();
+        return () => {
+          limpiezas.forEach((fn) => fn());
+          split?.revert();
+        };
       });
 
       /* Vista previa que sigue al puntero — solo con ratón */
@@ -82,8 +99,14 @@ const ProjectIndexSection = () => {
           const index = Number(row.dataset.index ?? 0);
           const enter = () => {
             gsap.to(preview, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "power3.out" });
-            gsap.to(".idx-preview-img", { autoAlpha: 0, duration: 0.2 });
-            gsap.to(`.idx-preview-img-${index}`, { autoAlpha: 1, duration: 0.25 });
+            /* preview vive en <body>, así que se consulta desde él y no por
+               selector con ámbito, que solo mira dentro de la sección */
+            gsap.to(preview.querySelectorAll(".idx-preview-img"), {
+              autoAlpha: 0,
+              duration: 0.2,
+            });
+            const activa = preview.querySelector(`.idx-preview-img-${index}`);
+            if (activa) gsap.to(activa, { autoAlpha: 1, duration: 0.25 });
           };
           const leave = () =>
             gsap.to(preview, { autoAlpha: 0, scale: 0.9, duration: 0.3, ease: "power2.out" });
@@ -106,16 +129,16 @@ const ProjectIndexSection = () => {
 
       /* Miniatura inline en móvil */
       mm.add(`${MQ.mobile} and ${MQ.motion}`, () => {
-        gsap.utils.toArray<HTMLElement>(".idx-row-thumb").forEach((thumb) => {
-          gsap.fromTo(
-            thumb,
-            { clipPath: "inset(0 100% 0 0)" },
-            {
-              clipPath: "inset(0 0% 0 0)",
-              duration: 0.8,
-              ease: "expo.out",
-              scrollTrigger: { trigger: thumb, start: "top 92%", once: true },
-            }
+        const limpiezas: Array<() => void> = [];
+        ref.current?.querySelectorAll<HTMLElement>(".idx-row-thumb").forEach((thumb) => {
+          limpiezas.push(
+            revealOnView(
+              thumb,
+              thumb,
+              { clipPath: "inset(0 100% 0 0)" },
+              { duration: 0.8, ease: "expo.out" },
+              { stagger: 0 }
+            )
           );
           gsap.fromTo(
             thumb.querySelector("img"),
@@ -127,11 +150,12 @@ const ProjectIndexSection = () => {
             }
           );
         });
+        return () => limpiezas.forEach((fn) => fn());
       });
 
       return () => mm.revert();
     },
-    { scope: ref }
+    { scope: ref, dependencies: [montado] }
   );
 
   return (
@@ -195,19 +219,23 @@ const ProjectIndexSection = () => {
         </div>
       </div>
 
-      <div ref={previewRef} className="idx-preview" aria-hidden>
-        {projects.map((project, i) => (
-          <Image
-            key={project.slug}
-            src={project.cover}
-            alt=""
-            fill
-            sizes="340px"
-            className={`idx-preview-img idx-preview-img-${i}`}
-            style={{ objectFit: "cover" }}
-          />
-        ))}
-      </div>
+      {montado &&
+        createPortal(
+          <div ref={previewRef} className="idx-preview" aria-hidden>
+            {projects.map((project, i) => (
+              <Image
+                key={project.slug}
+                src={project.cover}
+                alt=""
+                fill
+                sizes="340px"
+                className={`idx-preview-img idx-preview-img-${i}`}
+                style={{ objectFit: "cover" }}
+              />
+            ))}
+          </div>,
+          document.body
+        )}
     </section>
   );
 };

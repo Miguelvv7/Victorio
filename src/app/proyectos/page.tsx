@@ -4,9 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import PageShell from "@/components/PageShell";
 import FooterSection from "@/sections/FooterSection";
-import { gsap, MQ, splitChars, scramble } from "@/lib/motion";
+import { gsap, MQ, splitChars, scramble, revealOnView } from "@/lib/motion";
 import { projects, statusLabel } from "@/data/projects";
 
 export default function ProyectosPage() {
@@ -48,19 +47,16 @@ export default function ProyectosPage() {
         });
 
         /* Tarjetas: entrada por columnas con máscara */
+        const limpiezas: Array<() => void> = [];
         gsap.utils.toArray<HTMLElement>(".archive-card").forEach((card, i) => {
-          gsap.fromTo(
-            card,
-            { yPercent: 14, opacity: 0, clipPath: "inset(0 0 100% 0)" },
-            {
-              yPercent: 0,
-              opacity: 1,
-              clipPath: "inset(0 0 0% 0)",
-              duration: 0.9,
-              delay: (i % 2) * 0.08,
-              ease: "expo.out",
-              scrollTrigger: { trigger: card, start: "top 90%", once: true },
-            }
+          limpiezas.push(
+            revealOnView(
+              card,
+              card,
+              { yPercent: 14, opacity: 0, clipPath: "inset(0 0 100% 0)" },
+              { duration: 0.9, ease: "expo.out", delay: (i % 2) * 0.08 },
+              { stagger: 0 }
+            )
           );
 
           const img = card.querySelector(".archive-card-img");
@@ -95,7 +91,10 @@ export default function ProyectosPage() {
           },
         });
 
-        return () => split?.revert();
+        return () => {
+          limpiezas.forEach((fn) => fn());
+          split?.revert();
+        };
       });
 
       return () => mm.revert();
@@ -105,7 +104,6 @@ export default function ProyectosPage() {
 
   return (
     <main ref={ref}>
-      <PageShell>
         <section className="archive-hero">
           <div className="hero-grid-bg" />
           <p className="archive-eyebrow" style={{ clipPath: "inset(0 100% 0 0)" }}>
@@ -174,7 +172,6 @@ export default function ProyectosPage() {
         </section>
 
         <FooterSection />
-      </PageShell>
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Antonio } from "next/font/google";
 import localFont from "next/font/local";
+import SmoothProvider from "@/components/SmoothProvider";
 import "./globals.css";
 
 const antonio = Antonio({
@@ -66,7 +67,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${antonio.variable} ${proximaNova.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SmoothProvider>{children}</SmoothProvider>
+      </body>
     </html>
   );
 }

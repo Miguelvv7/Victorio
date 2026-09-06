@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, MQ } from "@/lib/motion";
+import { gsap, MQ, revealOnView } from "@/lib/motion";
 
 const LINE_1 = "Nadie entra en una tienda a".split(" ");
 const LINE_2 = "preguntar quién la hizo.".split(" ");
@@ -22,6 +22,7 @@ const ManifestoSection = () => {
         (context) => {
           const { isDesktop, reduce } = context.conditions as Record<string, boolean>;
           const words = gsap.utils.toArray<HTMLElement>(".mf-word");
+          const limpiezas: Array<() => void> = [];
 
           if (reduce) {
             gsap.set(words, { color: "#0c1829" });
@@ -42,27 +43,14 @@ const ManifestoSection = () => {
             },
           });
 
-          gsap.fromTo(
-            ".mf-badge",
-            { clipPath: "inset(0 50% 0 50%)" },
-            {
-              clipPath: "inset(0 0% 0 0%)",
-              duration: 0.9,
-              ease: "expo.out",
-              scrollTrigger: { trigger: ref.current, start: "top 82%", once: true },
-            }
+          const raiz = ref.current;
+          limpiezas.push(
+            revealOnView(raiz, raiz?.querySelector(".mf-badge"),
+              { clipPath: "inset(0 50% 0 50%)" }, { duration: 0.9, ease: "expo.out" })
           );
-
-          gsap.fromTo(
-            ".mf-support",
-            { opacity: 0, y: 18 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: "power2.out",
-              scrollTrigger: { trigger: ".mf-support", start: "top 92%", once: true },
-            }
+          limpiezas.push(
+            revealOnView(raiz?.querySelector(".mf-support"), raiz?.querySelector(".mf-support"),
+              { opacity: 0, y: 18 }, { duration: 0.7, ease: "power2.out" })
           );
 
           gsap.to(".mf-noise", {
@@ -75,6 +63,8 @@ const ManifestoSection = () => {
               scrub: true,
             },
           });
+
+          return () => limpiezas.forEach((fn) => fn());
         }
       );
 

@@ -46,11 +46,13 @@ const CapabilitiesSection = () => {
 
           panels.forEach((panel, i) => {
             if (i === panels.length - 1) return;
-            tl.to(panel, { autoAlpha: 0, yPercent: -10, duration: 0.5, ease: "power2.in" }, "+=0.4")
+            /* Sin solape: uno se va del todo antes de que entre el siguiente.
+               Cruzándose, los dos textos quedaban encima el uno del otro. */
+            tl.to(panel, { autoAlpha: 0, yPercent: -10, duration: 0.45, ease: "power2.in" }, "+=0.45")
               .to(
                 panels[i + 1],
-                { autoAlpha: 1, yPercent: 0, duration: 0.6, ease: "power2.out" },
-                "-=0.12"
+                { autoAlpha: 1, yPercent: 0, duration: 0.55, ease: "power2.out" },
+                "+=0.05"
               );
           });
 
