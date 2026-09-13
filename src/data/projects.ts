@@ -16,6 +16,8 @@ export interface Project {
   /** etiqueta de disciplina, se muestra en mayúsculas */
   category: string;
   year: number;
+  /** fecha con mes para la ficha, p. ej. "Mayo 2026". Si falta se usa `year` */
+  date?: string;
   /** qué hiciste tú en el proyecto */
   role: string;
   client?: string;
@@ -53,10 +55,11 @@ export const projects: Project[] = [
   {
     slug: "lookvintage",
     title: "LookVintage",
-    tagline: "Migración PrestaShop → Shopify con 350 productos",
+    tagline: "Migración de PrestaShop a Shopify sin pagar por pasar el catálogo a mano",
     category: "Shopify · Ecommerce",
     year: 2026,
-    role: "Diseño, desarrollo Liquid y migración de catálogo",
+    date: "Mayo 2026",
+    role: "Diseño, desarrollo Liquid, migración de catálogo y SEO",
     client: "LookVintage",
     location: "Écija, Sevilla",
     status: "live",
@@ -65,36 +68,38 @@ export const projects: Project[] = [
     cover: "/images/project-lookvintage.webp",
     gallery: ["/images/screen-lookvintage.jpg"],
     stack: ["Shopify", "Liquid", "GraphQL", "JavaScript", "SEO"],
-    goal: "Vender ropa vintage online sin que gestionar la tienda sea un trabajo a jornada completa.",
+    goal: "Volver a vender muebles a medida online con una tienda que se pueda gestionar sin sufrir.",
     context:
-      "La tienda vivía en PrestaShop desde hacía años. El catálogo era enorme, cada pieza es única, y el panel se había vuelto tan lento que actualizar stock era una tarea que nadie quería.",
+      "Tenían una tienda en PrestaShop que llevaba un año sin recibir tráfico. Estaba anticuada y cambiar un producto era un infierno. Sabían que había que cambiarla, pero todas las empresas a las que preguntaban pedían una pasta: el problema eran los 350 productos, que había que pasar uno a uno o pagando una aplicación carísima.",
     summary: [
-      "Tienda de moda vintage que llevaba años en PrestaShop, con más de 350 referencias y un panel tan lento que actualizar el stock se había vuelto un castigo.",
-      "La rehíce entera en Shopify: diseño nuevo, catálogo traído con la API y redirecciones desde las URLs viejas para no perder el sitio que ya tenían en Google.",
+      "En vez de pasar el catálogo a mano, programé una herramienta que lo hizo por mí: productos, variantes, imágenes y precios, todo migrado a Shopify sin teclear nada. Eso es lo que lo hizo asequible.",
+      "Con el catálogo dentro, monté la tienda entera: diseño nuevo, colecciones, fichas de producto, variantes y el SEO para que Google volviera a mandar visitas.",
     ],
     highlights: [
-      "Traje los 350+ productos con sus variantes e imágenes usando la API de Shopify",
-      "Colecciones y fichas de producto adaptadas a cómo vende esta tienda",
-      "Redirecciones desde todas las direcciones antiguas para no perder visitas",
-      "Filtros y buscador pensados para ropa de segunda mano, donde cada pieza es única"
+      "Programé un migrador propio para pasar los 350 productos con sus variantes e imágenes, sin apps de pago",
+      "Diseño nuevo pensado para muebles a medida, con sus opciones y variantes en cada ficha",
+      "Colecciones y fichas de producto montadas desde cero",
+      "SEO trabajado para recuperar el tráfico que llevaban un año sin tener",
+      "Cambiar un producto ahora se hace desde el móvil en un minuto"
     ],
     outcome:
-      "Una tienda que se gestiona desde el móvil, con el catálogo completo migrado y sin perder el tráfico que ya tenían en Google.",
+      "Un 80 % más de visitas en la web y un aumento claro en las ventas, incluso con la empresa de vacaciones. Y cambiar un producto ya no es un castigo.",
     facts: [
-      { value: "350+", label: "productos migrados" },
-      { value: "0", label: "URLs perdidas" },
-      { value: "2026", label: "año de lanzamiento" },
+      { value: "+80%", label: "de visitas en la web" },
+      { value: "350+", label: "productos migrados con mi herramienta" },
+      { value: "0 €", label: "en apps de migración" },
     ],
     accent: "#60a5fa",
   },
   {
     slug: "facturas",
     title: "Facturas",
-    tagline: "App de facturación y control de gastos para una distribuidora de aceite",
+    tagline: "App de facturación y control de gastos para autónomos",
     category: "Next.js · App · Supabase",
     year: 2026,
+    date: "Agosto 2026",
     role: "Producto, diseño, desarrollo y modelo fiscal",
-    client: "Distribuidora de aceite · proyecto para un compañero",
+    client: "Un amigo autónomo y un familiar",
     location: "Écija, Sevilla",
     status: "live",
     featured: true,
@@ -104,30 +109,30 @@ export const projects: Project[] = [
       "/images/screen-facturas-informes.jpg",
     ],
     galleryNote:
-      "El proyecto y el cliente son reales; los datos de las capturas no. Están hechas con el juego de datos de ejemplo que trae la propia aplicación, así que el negocio, los clientes, los productos y todos los importes son inventados.",
+      "El proyecto y los usuarios son reales; los datos de las capturas no. Están hechas con el juego de datos de ejemplo que trae la propia aplicación, así que el negocio, los clientes, los productos y todos los importes son inventados.",
     stack: ["Next.js", "TypeScript", "Supabase", "Postgres", "Tailwind", "jsPDF", "Vitest"],
     goal:
       "Que un autónomo pueda facturar bien y saber qué gana sin entender de fiscalidad ni pelearse con un Excel.",
     context:
-      "Un compañero con una empresa de venta de aceite llevaba las ventas y los gastos en hojas de cálculo. Sabía lo que vendía, pero no lo que le quedaba ni cuánto tenía que apartar para Hacienda — y eso solo se descubría al llegar el trimestre.",
+      "Un amigo acababa de hacerse autónomo y quería quitarse de encima el lío de los trámites. Y un familiar llevaba las facturas de sus clientes en Excel: sabía lo que vendía, pero no lo que le quedaba ni cuánto tenía que apartar para Hacienda, y eso solo se descubría al llegar el trimestre.",
     summary: [
-      "Es una aplicación web privada, con cuentas, para llevar el negocio entero: clientes, productos, gastos, facturas y los informes que dicen qué producto deja dinero de verdad.",
+      "Es una aplicación web privada, con cuentas, para llevar el negocio entero: clientes, productos, gastos, facturas y los informes que dicen qué deja dinero de verdad.",
       "La idea de fondo es que la complejidad la coma el código. La app calcula el IVA por tipo, el recargo de equivalencia y el adelanto del IRPF, pero en pantalla solo aparece una frase: «aparta 1.661 € antes del 20 de octubre». La palabra «modelo 303» no sale nunca.",
     ],
     highlights: [
-      "Calcula el IVA por tipos (4 % el aceite, 10 % las semillas, 21 % los portes) y el recargo de equivalencia",
+      "Calcula el IVA por tipos (4 %, 10 % y 21 %) y el recargo de equivalencia",
       "Las cuentas se llevan en céntimos enteros: una factura que no cuadra al céntimo es una factura que te pueden rechazar",
       "Una factura emitida no se puede tocar ni borrar; para corregir hay que hacer una rectificativa, como manda la ley",
       "Cada factura queda encadenada a la anterior con una huella, cumpliendo Verifactu antes de que sea obligatorio",
-      "Genera el PDF con el logo y el color de la marca del cliente",
+      "Genera el PDF con el logo y el color de la marca de cada usuario",
       "Avisa de qué producto deja más dinero, de qué clientes llevan tiempo sin comprar y de qué se está acabando",
       "Cada usuario ve solo sus datos, y la app también funciona en local sin cuenta para probarla"
     ],
     outcome:
-      "Las hojas de cálculo desaparecieron. Ahora factura desde el móvil con numeración correlativa correcta y sabe en todo momento cuánto del dinero de la cuenta no es suyo.",
+      "El Excel desapareció. Los dos facturan desde el móvil con numeración correlativa correcta, tienen más control sobre lo que entra y sale, y saben en todo momento cuánto del dinero de la cuenta no es suyo.",
     facts: [
+      { value: "2", label: "negocios usándola a diario" },
       { value: "65", label: "tests del motor fiscal" },
-      { value: "0", label: "decimales flotantes" },
       { value: "Verifactu", label: "desde el día uno" },
     ],
     accent: "#7d9142",
@@ -138,6 +143,7 @@ export const projects: Project[] = [
     tagline: "Estudio de interiorismo con animaciones GSAP",
     category: "Shopify · Diseño",
     year: 2026,
+    date: "Actualmente",
     role: "Dirección visual, desarrollo y animación",
     client: "Manuel Interiorismo",
     location: "Écija, Sevilla",
@@ -171,36 +177,39 @@ export const projects: Project[] = [
   {
     slug: "londonlangford",
     title: "London Langford",
-    tagline: "Tienda de moda internacional montada de cero",
+    tagline: "Tienda de moda para Londres que facturó 22.000 £ en dos meses",
     category: "Shopify · Dropshipping",
     year: 2026,
-    role: "Montaje de tienda, tema y automatizaciones",
+    date: "Junio 2026",
+    role: "Investigación de mercado, diseño, montaje de tienda y automatizaciones",
     client: "London Langford",
-    location: "Remoto",
+    location: "Londres · remoto",
     status: "live",
     featured: true,
     liveUrl: "https://londonlangford.com/",
     cover: "/images/langford.png",
     gallery: ["/images/project-londonlangford.jpg"],
     stack: ["Shopify", "Liquid", "n8n", "Python", "Playwright"],
-    goal: "Montar una tienda internacional que se mantenga sola mientras el catálogo crece.",
+    goal: "Vender ropa en Londres desde España con una tienda que parezca de allí y se mantenga sola.",
     context:
-      "Proyecto arrancado de cero, sin tienda previa. El cuello de botella evidente era el catálogo: subir y actualizar productos a mano no escalaba.",
+      "Un amigo quería montar un negocio de dropshipping de ropa en Londres y me pidió la web. No había nada: ni tienda, ni catálogo, ni referencia de cómo tenía que ser. Y vender en otro país no es solo traducir la web.",
     summary: [
-      "Proyecto de moda internacional arrancado desde cero, sin tienda previa. Había que estar vendiendo pronto y sin depender de nadie para mover el catálogo.",
-      "Monté la tienda entera y automaticé la parte pesada: subir productos, dejar los datos ordenados y mantener el stock al día sin tocar nada a mano.",
+      "Antes de tocar nada me puse a investigar el mercado de Londres: qué tiendas funcionan allí, cómo se ven, cómo escriben, qué esperan sus clientes. Y monté la tienda adaptada a eso, no una tienda española en inglés.",
+      "Después automaticé la parte pesada: subir productos, dejar los datos ordenados y mantener stock y precios al día sin tocar nada a mano, para que el catálogo pudiera crecer sin que él tuviera que estar encima.",
     ],
     highlights: [
-      "Tienda con pago en varias divisas, lista para vender fuera de España",
+      "Investigación del mercado londinense y de sus tiendas de referencia antes de diseñar",
+      "Tienda pensada para el cliente de allí: idioma, moneda, tono y estilo",
       "Las fichas de producto se sacan y se ordenan solas con Python",
-      "Flujos automáticos que mantienen stock y precios al día",
+      "Flujos automáticos en n8n que mantienen stock y precios al día",
       "Colecciones montadas para que el catálogo pueda crecer sin rehacerlo"
     ],
     outcome:
-      "Tienda operativa en multi-divisa con el catálogo entrando y actualizándose solo desde los flujos de n8n.",
+      "La tienda facturó 22.000 £ en sus dos primeros meses, con el catálogo entrando y actualizándose solo desde los flujos de n8n.",
     facts: [
+      { value: "22.000 £", label: "facturados en 2 meses" },
+      { value: "0", label: "tiendas previas: montada de cero" },
       { value: "n8n", label: "catálogo automatizado" },
-      { value: "Multi", label: "divisa e idioma" },
     ],
     accent: "#e8712b",
   },
@@ -369,6 +378,7 @@ export const porqueYo = [
      tagline: "Una frase de qué es",
      category: "Shopify · Ecommerce",
      year: 2026,
+     date: "Mayo 2026",         // opcional, se muestra en la ficha
      role: "Qué hiciste tú",
      client: "Nombre del cliente",
      location: "Écija, Sevilla",

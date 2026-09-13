@@ -230,7 +230,7 @@ export default function CaseStudy({ project, next }: CaseStudyProps) {
               {[
                 { label: "Cliente", value: project.client ?? "Proyecto propio" },
                 { label: "Rol", value: project.role },
-                { label: "Año", value: String(project.year) },
+                { label: "Fecha", value: project.date ?? String(project.year) },
                 { label: "Lugar", value: project.location },
                 { label: "Estado", value: statusLabel[project.status] },
               ].map((row) => (
