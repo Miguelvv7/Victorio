@@ -31,6 +31,12 @@ export function createSmoother() {
   const existing = ScrollSmoother.get();
   if (existing) existing.kill();
 
+  /* En táctil, los cambios de alto que provoca la barra de Safari no deben
+     recalcular todo: con dos secciones con pin, cada recálculo en mitad del
+     gesto era un tirón. Esta opción es de ScrollTrigger; dentro de
+     ScrollSmoother.create, donde estaba antes, no hacía nada. */
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
   const smoother = ScrollSmoother.create({
     wrapper: "#smooth-wrapper",
     content: "#smooth-content",
@@ -38,7 +44,6 @@ export function createSmoother() {
     smoothTouch: 0.12,
     effects: true,
     normalizeScroll: false,
-    ignoreMobileResize: true,
   });
 
   return () => smoother.kill();
@@ -215,6 +220,26 @@ export function skewOnVelocity(selector: string, max = 12) {
       }
     },
   });
+}
+
+/**
+ * Pausa animaciones infinitas (marquesinas) mientras su bloque no se ve, y las
+ * reanuda al volver. Con IntersectionObserver y no con ScrollTrigger, por lo
+ * mismo que revealOnView: no depende de medidas de la página.
+ */
+export function pauseWhenHidden(
+  el: Element | null | undefined,
+  animaciones: Array<gsap.core.Animation>
+): () => void {
+  if (!el || typeof IntersectionObserver === "undefined") return () => {};
+  const io = new IntersectionObserver(
+    ([entrada]) => {
+      animaciones.forEach((a) => (entrada.isIntersecting ? a.resume() : a.pause()));
+    },
+    { rootMargin: "120px 0px" }
+  );
+  io.observe(el);
+  return () => io.disconnect();
 }
 
 /** Refresca ScrollTrigger cuando cambian imágenes/fuentes. */

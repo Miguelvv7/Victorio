@@ -181,6 +181,10 @@ const ShowcaseSection = () => {
                   className="sc-card-img"
                   sizes="(max-width: 899px) 84vw, 46vw"
                   priority={i === 0}
+                  /* Todas cargadas de antemano: si una foto se descarga y se
+                     decodifica en mitad del deslizamiento horizontal, el
+                     iPhone pega un tirón justo ahí */
+                  loading={i === 0 ? undefined : "eager"}
                 />
                 <div className="sc-card-overlay" />
                 <span

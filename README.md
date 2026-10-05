@@ -114,6 +114,9 @@ src/
 ## Las animaciones
 
 Son las mismas en el ordenador y en el móvil; lo que cambia son las medidas.
+Hay una excepción: en el móvil las fotos de los proyectos no hacen zoom ni
+parallax, para que se vean siempre enteras, y las etiquetas de estado van sin
+desenfoque de fondo, que es lo que más le cuesta a Safari en el iPhone.
 Se orquestan con `gsap.matchMedia()` desde `src/lib/motion.ts`:
 
 - `MQ.desktop` / `MQ.mobile` — misma animación, distintas distancias y escalas.
@@ -124,7 +127,7 @@ Se orquestan con `gsap.matchMedia()` desde `src/lib/motion.ts`:
 permite que el scroll horizontal con pin y los efectos con `scrub` se comporten
 igual en el móvil que en el ordenador.
 
-Tres reglas para no romperlo:
+Cuatro reglas para no romperlo:
 
 - Dentro de un `useGSAP({ scope: ref })` los selectores solo buscan
   **descendientes**. Para apuntar al propio elemento raíz hay que usar
@@ -132,6 +135,13 @@ Tres reglas para no romperlo:
 - Todo `ScrollTrigger` con medidas calculadas lleva `invalidateOnRefresh: true`.
 - Las fuentes se cargan con `next/font`, así `SplitText` mide sobre la
   tipografía definitiva y no sobre la de reserva.
+- Las alturas de pantalla completa van en `svh`, nunca en `dvh`. En el iPhone,
+  `dvh` cambia cada vez que Safari esconde o enseña su barra, y las secciones
+  con pin se descolocan en mitad del scroll.
+
+Para que el iPhone vaya fino, las marquesinas se pausan cuando no se ven
+(`pauseWhenHidden` en `src/lib/motion.ts`) y las fotos de la galería
+horizontal se cargan de antemano.
 
 ---
 

@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
-import { gsap, splitChars, scramble, MQ } from "@/lib/motion";
+import { gsap, splitChars, scramble, MQ, pauseWhenHidden } from "@/lib/motion";
 import { metrics, stack } from "@/data/projects";
 
 interface HeroSectionProps {
@@ -102,16 +102,20 @@ const HeroSection: React.FC<HeroSectionProps> = ({ triggerAnimation }) => {
             "-=0.8"
           );
 
-        /* Marquesina inferior de stack */
-        gsap.to(".hero-ticker-track", {
+        /* Marquesina inferior de stack (se pausa cuando el hero sale de
+           pantalla: no tiene sentido animar lo que no se ve) */
+        const ticker = gsap.to(".hero-ticker-track", {
           xPercent: -50,
           duration: 26,
           ease: "none",
           repeat: -1,
         });
+        const dejarDeVigilar = pauseWhenHidden(ref.current, [ticker]);
 
         return () => {
           split?.revert();
+          ticker.kill();
+          dejarDeVigilar();
         };
       });
 
