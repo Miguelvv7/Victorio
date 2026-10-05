@@ -177,43 +177,6 @@ export const projects: Project[] = [
     accent: "#cfae74",
   },
   {
-    slug: "manuelinteriorismo",
-    title: "Manuel Interiorismo",
-    tagline: "Estudio de interiorismo con animaciones GSAP",
-    category: "Shopify · Diseño",
-    year: 2026,
-    date: "En desarrollo",
-    role: "Dirección visual, desarrollo y animación",
-    client: "Manuel Interiorismo",
-    location: "Écija, Sevilla",
-    status: "wip",
-    featured: true,
-    liveUrl: "https://manuelinteriorismo.com/",
-    cover: "/images/project-manuel.jpg",
-    gallery: ["/images/screen-manuel.jpg"],
-    stack: ["Shopify", "Liquid", "GSAP", "ScrollTrigger", "CSS"],
-    goal: "Enseñar proyectos de interiorismo como si fueran una revista, y vender después.",
-    context:
-      "El estudio no necesitaba un escaparate de productos: necesitaba que se vieran sus proyectos. Las plantillas de ecommerce estándar hacían justo lo contrario.",
-    summary: [
-      "Un estudio de interiorismo no necesitaba un escaparate de productos: necesitaba que se vieran sus proyectos. Las plantillas de tienda hacen justo lo contrario.",
-      "Está montada sobre Shopify pero con estructura de portfolio: mandan los proyectos, el producto viene después, y todo se va descubriendo conforme bajas.",
-    ],
-    highlights: [
-      "Galerías de proyecto que se recorren en horizontal",
-      "Las imágenes entran y se mueven a distinta velocidad según bajas",
-      "Todo editable desde el panel, para que puedan publicar sin llamarme",
-      "Las fotos pesadas se cargan cuando hacen falta, no todas de golpe"
-    ],
-    outcome:
-      "Una web con estructura de portfolio sobre Shopify: los proyectos mandan, el producto acompaña, y el estudio publica sin tocar código.",
-    facts: [
-      { value: "GSAP", label: "motor de animación" },
-      { value: "100%", label: "editable por el cliente" },
-    ],
-    accent: "#c9a227",
-  },
-  {
     slug: "peluquerialafamilia",
     title: "Peluquería La Familia",
     tagline: "Web de reservas que sustituye a plataformas de pago en una peluquería de Écija",
@@ -253,6 +216,43 @@ export const projects: Project[] = [
       { value: "1 mes", label: "de citas abiertas, día a día" },
     ],
     accent: "#71c780",
+  },
+  {
+    slug: "manuelinteriorismo",
+    title: "Manuel Interiorismo",
+    tagline: "Estudio de interiorismo con animaciones GSAP",
+    category: "Shopify · Diseño",
+    year: 2026,
+    date: "En desarrollo",
+    role: "Dirección visual, desarrollo y animación",
+    client: "Manuel Interiorismo",
+    location: "Écija, Sevilla",
+    status: "wip",
+    featured: true,
+    liveUrl: "https://manuelinteriorismo.com/",
+    cover: "/images/project-manuel.jpg",
+    gallery: ["/images/screen-manuel.jpg"],
+    stack: ["Shopify", "Liquid", "GSAP", "ScrollTrigger", "CSS"],
+    goal: "Enseñar proyectos de interiorismo como si fueran una revista, y vender después.",
+    context:
+      "El estudio no necesitaba un escaparate de productos: necesitaba que se vieran sus proyectos. Las plantillas de ecommerce estándar hacían justo lo contrario.",
+    summary: [
+      "Un estudio de interiorismo no necesitaba un escaparate de productos: necesitaba que se vieran sus proyectos. Las plantillas de tienda hacen justo lo contrario.",
+      "Está montada sobre Shopify pero con estructura de portfolio: mandan los proyectos, el producto viene después, y todo se va descubriendo conforme bajas.",
+    ],
+    highlights: [
+      "Galerías de proyecto que se recorren en horizontal",
+      "Las imágenes entran y se mueven a distinta velocidad según bajas",
+      "Todo editable desde el panel, para que puedan publicar sin llamarme",
+      "Las fotos pesadas se cargan cuando hacen falta, no todas de golpe"
+    ],
+    outcome:
+      "Una web con estructura de portfolio sobre Shopify: los proyectos mandan, el producto acompaña, y el estudio publica sin tocar código.",
+    facts: [
+      { value: "GSAP", label: "motor de animación" },
+      { value: "100%", label: "editable por el cliente" },
+    ],
+    accent: "#c9a227",
   },
   {
     slug: "londonlangford",
