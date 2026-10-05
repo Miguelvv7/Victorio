@@ -10,9 +10,9 @@ Me llamo Miguel Victorio, tengo 21 años y vivo en Écija, Sevilla.
 
 No vengo de una carrera de informática — el curso lo empiezo ahora. Empecé
 haciendo una web para un amigo, luego otra para alguien que me escribió, y de
-ahí no he parado. Hoy hay cuatro negocios funcionando con cosas que he montado
-yo: dos tiendas online, la web de un estudio de interiorismo y una aplicación de
-facturación para una distribuidora de aceite.
+ahí no he parado. Hoy hay cuatro negocios con webs que he montado yo:
+dos tiendas online, la web de un estudio de interiorismo y la de una óptica
+con gabinete de audiología.
 
 La IA es mi herramienta principal y no lo escondo. Es lo que me permite abrir
 proyectos que hace un año ni habría intentado. Lo que pongo yo son las horas, el
@@ -55,8 +55,12 @@ No hay que tocar componentes ni crear páginas — la ficha `/proyectos/<slug>` 
 genera sola, y el proyecto aparece automáticamente en la portada, en el archivo,
 en el índice y en el sitemap.
 
-1. **Sube la portada** a `public/images/` (apaisada, ~1600 px de ancho).
-   Si tienes capturas extra, súbelas también y ponlas en `gallery`.
+1. **Sube la portada** a `public/images/`. Tiene que ser **16:9 (1920×1080)**:
+   se enseña entera, sin recortes, en el móvil y en el ordenador. Las portadas
+   actuales son una ventana de navegador con la web y, cuando hay captura del
+   móvil, un teléfono encima con la versión móvil.
+   Si tienes capturas extra, súbelas también y ponlas en `gallery` (esas pueden
+   tener cualquier proporción).
 2. **Copia la plantilla** que hay comentada al final de `src/data/projects.ts` y
    pégala dentro del array `projects`, donde quieras que aparezca.
 3. Rellena los campos. Los que cuentan la historia son estos:
@@ -73,6 +77,14 @@ en el índice y en el sitemap.
 
 4. `featured: true` lo saca además en la galería horizontal de la portada.
    `status` acepta `"live"`, `"wip"` o `"archived"`.
+
+### Retos personales
+
+Los proyectos propios que no son encargos (o que ya no usa nadie) van en
+`personalProjects`, en el mismo archivo, en vez de en `projects`. Salen en el
+apartado **Retos personales** al final de `/proyectos`, tienen su ficha y entran
+en el sitemap, pero no aparecen en la portada ni cuentan como proyectos de
+cliente. Ahora mismo ahí está la app de facturas.
 
 ---
 
@@ -93,7 +105,7 @@ src/
   sections/
     HeroSection · ManifestoSection · ShowcaseSection
     CapabilitiesSection · ProjectIndexSection · FooterSection
-  data/projects.ts              ← el contenido
+  data/projects.ts              ← el contenido (proyectos + retos personales)
   lib/motion.ts                 helpers de GSAP compartidos
 ```
 
