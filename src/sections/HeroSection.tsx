@@ -136,6 +136,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ triggerAnimation }) => {
             yPercent: isDesktop ? 18 : 10,
             opacity: 0.35,
             ease: "power1.inOut",
+            force3D: true,
             scrollTrigger: {
               trigger: ref.current,
               start: "1% top",
@@ -148,6 +149,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ triggerAnimation }) => {
             yPercent: isDesktop ? 25 : 14,
             xPercent: isDesktop ? -6 : -12,
             ease: "none",
+            force3D: true,
             scrollTrigger: {
               trigger: ref.current,
               start: "top top",
@@ -159,6 +161,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ triggerAnimation }) => {
           gsap.to(".hero-grid-bg", {
             yPercent: 12,
             ease: "none",
+            force3D: true,
             scrollTrigger: {
               trigger: ref.current,
               start: "top top",

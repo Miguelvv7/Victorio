@@ -139,9 +139,15 @@ Cuatro reglas para no romperlo:
   `dvh` cambia cada vez que Safari esconde o enseña su barra, y las secciones
   con pin se descolocan en mitad del scroll.
 
-Para que el iPhone vaya fino, las marquesinas se pausan cuando no se ven
-(`pauseWhenHidden` en `src/lib/motion.ts`) y las fotos de la galería
-horizontal se cargan de antemano.
+Para que el iPhone vaya fino:
+
+- Para recalcular medidas se usa `refrescar()` de `src/lib/motion.ts`, nunca
+  `ScrollTrigger.refresh()` a pelo: si el usuario está haciendo scroll, espera
+  a que pare. Un recálculo en mitad del gesto es un tirón seco en el iPhone.
+- En pantallas solo táctiles el scroll lo lleva GSAP (`normalizeScroll`), así
+  Safari no esconde ni enseña su barra a mitad de gesto.
+- Las marquesinas se pausan cuando no se ven (`pauseWhenHidden`) y las fotos de
+  la galería horizontal se cargan de antemano.
 
 ---
 

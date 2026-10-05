@@ -37,13 +37,21 @@ export function createSmoother() {
      ScrollSmoother.create, donde estaba antes, no hacía nada. */
   ScrollTrigger.config({ ignoreMobileResize: true });
 
+  /* En móviles y tablets (solo táctil) el scroll lo lleva GSAP en vez del
+     navegador. Así Safari no esconde ni enseña su barra a mitad de gesto: cada
+     vez que lo hacía cambiaba el alto de la pantalla y daba un tirón (justo al
+     empezar a bajar y la primera vez que se volvía a subir). allowNestedScroll
+     deja que los bloques con scroll propio (el formulario, el menú) sigan
+     funcionando con normalidad. */
+  const soloTactil = ScrollTrigger.isTouch === 1;
+
   const smoother = ScrollSmoother.create({
     wrapper: "#smooth-wrapper",
     content: "#smooth-content",
     smooth: 1.15,
     smoothTouch: 0.12,
     effects: true,
-    normalizeScroll: false,
+    normalizeScroll: soloTactil ? { allowNestedScroll: true, debounce: true } : false,
   });
 
   return () => smoother.kill();
@@ -242,10 +250,33 @@ export function pauseWhenHidden(
   return () => io.disconnect();
 }
 
+/**
+ * Recalcula las medidas de ScrollTrigger sin dar tirones.
+ * ScrollTrigger.refresh() lo recalcula todo al momento aunque el usuario esté
+ * en mitad de un scroll, y en el iPhone eso se nota como un parón seco. Esta
+ * versión, si se está haciendo scroll, espera a que pare.
+ */
+let refrescoPendiente = false;
+export function refrescar() {
+  if (typeof window === "undefined") return;
+  if (!ScrollTrigger.isScrolling()) {
+    ScrollTrigger.refresh();
+    return;
+  }
+  if (refrescoPendiente) return;
+  refrescoPendiente = true;
+  const alParar = () => {
+    ScrollTrigger.removeEventListener("scrollEnd", alParar);
+    refrescoPendiente = false;
+    ScrollTrigger.refresh();
+  };
+  ScrollTrigger.addEventListener("scrollEnd", alParar);
+}
+
 /** Refresca ScrollTrigger cuando cambian imágenes/fuentes. */
 export function refreshOnLoad() {
   if (typeof window === "undefined") return () => {};
-  const refresh = () => ScrollTrigger.refresh();
+  const refresh = () => refrescar();
   window.addEventListener("load", refresh);
   document.fonts?.ready.then(refresh).catch(() => {});
   return () => window.removeEventListener("load", refresh);
