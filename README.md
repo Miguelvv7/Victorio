@@ -10,9 +10,9 @@ Me llamo Miguel Victorio, tengo 21 años y vivo en Écija, Sevilla.
 
 No vengo de una carrera de informática — el curso lo empiezo ahora. Empecé
 haciendo una web para un amigo, luego otra para alguien que me escribió, y de
-ahí no he parado. Hoy hay cuatro negocios con webs que he montado yo:
-dos tiendas online, la web de un estudio de interiorismo y la de una óptica
-con gabinete de audiología.
+ahí no he parado. Hoy hay cinco negocios con webs que he montado yo:
+dos tiendas online, la web de un estudio de interiorismo, la de una óptica
+con gabinete de audiología y la de reservas de una peluquería.
 
 La IA es mi herramienta principal y no lo escondo. Es lo que me permite abrir
 proyectos que hace un año ni habría intentado. Lo que pongo yo son las horas, el

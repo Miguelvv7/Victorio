@@ -214,6 +214,47 @@ export const projects: Project[] = [
     accent: "#c9a227",
   },
   {
+    slug: "peluquerialafamilia",
+    title: "Peluquería La Familia",
+    tagline: "Web de reservas que sustituye a plataformas de pago en una peluquería de Écija",
+    category: "Web app · Reservas",
+    year: 2026,
+    date: "Octubre 2026",
+    role: "Planteamiento, especificación técnica y dirección del proyecto",
+    client: "Peluquería La Familia",
+    location: "Écija, Sevilla",
+    status: "live",
+    featured: true,
+    liveUrl: "https://peluquerialafamilia.es/",
+    cover: "/images/project-familia.jpg",
+    gallery: ["/images/screen-familia-reserva.jpg"],
+    stack: ["Next.js", "Supabase", "Netlify", "Resend", "Claude Code"],
+    goal: "Que los clientes reserven solos desde el móvil y la peluquería se ahorre suscripciones externas.",
+    context:
+      "La peluquería quería su propia web de reservas y llevar un mejor registro de su actividad. Tenía que ir perfecta en el iPhone y en cualquier móvil, y no dar nunca dos citas a la misma hora.",
+    summary: [
+      "Antes de escribir una línea de código lo dejé todo decidido en una especificación de seis páginas. Recoge los datos del negocio, el diseño, cada paso de la reserva, la base de datos, la seguridad y la privacidad. Al final va una lista de errores que no podían pasar, cada uno con su forma de comprobarlo.",
+      "La web se construyó por fases con Claude Code siguiendo esa especificación. El resultado es una reserva en cuatro pasos pensada para el móvil: eliges servicio, día y hora, y la confirmación llega por email.",
+    ],
+    highlights: [
+      "Los datos del negocio y una dirección visual propia, para que no pareciera una plantilla",
+      "La reserva en cuatro pasos pensada para el iPhone, con el paso guardado en la dirección para poder volver atrás sin perder nada",
+      "Citas abiertas con un mes de antelación, abriendo un día nuevo cada día",
+      "Que nunca se puedan dar dos citas a la misma hora, ni aunque dos personas reserven a la vez",
+      "Confirmación por email con Resend y recordatorios por WhatsApp",
+      "Un panel para el peluquero desde el móvil: agenda, bloqueos de días y fichas de clientes",
+      "Seguridad, privacidad y la lista de errores prohibidos con sus pruebas",
+    ],
+    outcome:
+      "La web está publicada y ya se puede reservar desde el móvil. Las confirmaciones salen por email; los avisos por WhatsApp se activarán más adelante.",
+    facts: [
+      { value: "6", label: "páginas de especificación" },
+      { value: "4", label: "pasos para reservar" },
+      { value: "1 mes", label: "de citas abiertas, día a día" },
+    ],
+    accent: "#71c780",
+  },
+  {
     slug: "londonlangford",
     title: "London Langford",
     tagline: "Tienda de moda para Londres que facturó 22.000 £ en dos meses",
@@ -378,7 +419,7 @@ export const stack = [
 ];
 
 export const metrics = [
-  { value: "4", label: "webs publicadas" },
+  { value: "5", label: "webs publicadas" },
   { value: "2026", label: "aprendiendo" },
   { value: "Écija", label: "base · remoto" },
 ];
