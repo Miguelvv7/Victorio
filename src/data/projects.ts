@@ -188,7 +188,7 @@ export const projects: Project[] = [
     location: "Écija, Sevilla",
     status: "live",
     featured: true,
-    liveUrl: "https://peluquerialafamilia.es/",
+    offlineNote: "Web en uso por los clientes de la peluquería: no se enlaza para no generar reservas de prueba.",
     cover: "/images/project-familia.jpg",
     gallery: ["/images/screen-familia-reserva.jpg"],
     stack: ["Next.js", "Supabase", "Netlify", "Resend", "Claude Code"],
