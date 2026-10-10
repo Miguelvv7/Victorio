@@ -227,6 +227,7 @@ export const projects: Project[] = [
     tagline: "Tienda de moda para Italia, en italiano y pensada para el cliente de allí",
     category: "Shopify · Dropshipping",
     year: 2026,
+    date: "Octubre 2026",
     role: "Montaje de la tienda a partir del análisis de la competencia",
     client: "Bellandi Sartoria",
     location: "Italia · remoto",
