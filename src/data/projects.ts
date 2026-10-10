@@ -395,6 +395,33 @@ export const isPersonalProject = (slug: string) =>
 
 export const featuredProjects = projects.filter((p) => p.featured !== false);
 
+/* ── Línea de tiempo de /sobre-mi ──
+   Agrupa todos los proyectos por el mes de su `date`. Los que no tienen un
+   mes reconocible (p. ej. "En desarrollo") van al final, en «Ahora». */
+const MESES = [
+  "enero", "febrero", "marzo", "abril", "mayo", "junio",
+  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+];
+
+export interface TimelineMonth {
+  label: string;
+  projects: Project[];
+}
+
+export const timeline: TimelineMonth[] = (() => {
+  const porMes = new Map<number, Project[]>();
+  const ahora: Project[] = [];
+  for (const p of allProjects) {
+    const mes = MESES.indexOf((p.date ?? "").split(" ")[0].toLowerCase());
+    if (mes === -1) ahora.push(p);
+    else porMes.set(mes, [...(porMes.get(mes) ?? []), p]);
+  }
+  const meses = [...porMes.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([mes, ps]) => ({ label: MESES[mes][0].toUpperCase() + MESES[mes].slice(1), projects: ps }));
+  return ahora.length ? [...meses, { label: "Ahora", projects: ahora }] : meses;
+})();
+
 export const getProject = (slug: string) => allProjects.find((p) => p.slug === slug);
 
 export const statusLabel: Record<ProjectStatus, string> = {

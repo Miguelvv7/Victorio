@@ -6,11 +6,11 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import FooterSection from "@/sections/FooterSection";
 import { gsap, MQ, splitChars, splitLines, scramble, revealOnView } from "@/lib/motion";
-import { porqueYo, steps, stack, noHago, sectors } from "@/data/projects";
+import { porqueYo, steps, stack, noHago, sectors, projects, timeline } from "@/data/projects";
 
 const BIO = [
   "Me llamo Miguel Victorio, tengo 21 años y vivo en Écija, Sevilla.",
-  "No vengo de una carrera de informática — el curso lo empiezo ahora. Empecé haciendo una web para un amigo, luego otra para alguien que me escribió, y de ahí no he parado. Hoy hay cinco negocios con webs que he montado yo.",
+  `No vengo de una carrera de informática — el curso lo empiezo ahora. Empecé haciendo una web para un amigo, luego otra para alguien que me escribió, y de ahí no he parado. Hoy son ${projects.length} negocios con webs que he montado yo.`,
   "La IA es mi herramienta principal y no lo escondo: es lo que me permite abrir proyectos que hace un año ni habría intentado. Lo que sí pongo yo son las horas, las ganas de que quede bien y la cara cuando algo hay que arreglarlo.",
   "Trabajo solo y de principio a fin: hablo contigo, lo monto, lo publicamos y sigo estando después. Y si me pides algo que no sé hacer, te lo digo antes de empezar.",
 ];
@@ -96,6 +96,29 @@ export default function SobreMi() {
         const raiz = ref.current;
         const q = (sel: string) => raiz?.querySelector(sel);
         const qs = (sel: string) => raiz?.querySelectorAll(sel);
+
+        /* Línea de tiempo: el raíl se rellena con el scroll y cada mes entra al verse */
+        gsap.fromTo(
+          ".ab-tl-fill",
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".ab-tl",
+              start: "top 70%",
+              end: "bottom 70%",
+              scrub: true,
+            },
+          }
+        );
+
+        qs(".ab-tl-month")?.forEach((mes) => {
+          limpiezas.push(
+            revealOnView(mes, mes.querySelectorAll(".ab-tl-label, .ab-tl-item"),
+              { opacity: 0, y: 28 }, { duration: 0.7 }, { stagger: 0.1 })
+          );
+        });
 
         limpiezas.push(
           revealOnView(q(".ab-stack"), qs(".ab-chip"),
@@ -187,6 +210,44 @@ export default function SobreMi() {
           {BIO.map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}
+        </section>
+
+        <section className="ab-timeline">
+          <p className="ab-label">Mi 2026</p>
+          <h2 className="ab-tl-title">De la primera web a hoy</h2>
+          <div className="ab-tl">
+            <div className="ab-tl-rail" aria-hidden>
+              <div className="ab-tl-fill" />
+            </div>
+            <ol className="ab-tl-list">
+            {timeline.map((mes) => (
+              <li key={mes.label} className="ab-tl-month">
+                <span className="ab-tl-dot" aria-hidden />
+                <h3 className="ab-tl-label">{mes.label}</h3>
+                <div className="ab-tl-items">
+                  {mes.projects.map((p) => (
+                    <Link
+                      key={p.slug}
+                      href={`/proyectos/${p.slug}`}
+                      className="ab-tl-item"
+                      style={{ ["--accent" as string]: p.accent }}
+                    >
+                      <div className="ab-tl-thumb">
+                        <Image src={p.cover} alt="" fill sizes="(min-width: 900px) 12rem, 30vw" />
+                      </div>
+                      <div className="ab-tl-info">
+                        <span className="ab-tl-cat">{p.category}</span>
+                        <strong>{p.title}</strong>
+                        <p>{p.tagline}</p>
+                      </div>
+                      <span className="ab-tl-arrow" aria-hidden>→</span>
+                    </Link>
+                  ))}
+                </div>
+              </li>
+            ))}
+            </ol>
+          </div>
         </section>
 
         <section className="ab-stack">
