@@ -296,6 +296,44 @@ export const projects: Project[] = [
     ],
     accent: "#e8712b",
   },
+  {
+    slug: "bellandisartoria",
+    title: "Bellandi Sartoria",
+    tagline: "Tienda de moda para Italia, en italiano y pensada para el cliente de allí",
+    category: "Shopify · Dropshipping",
+    year: 2026,
+    role: "Diseño y montaje de tienda",
+    client: "Bellandi Sartoria",
+    location: "Italia · remoto",
+    status: "live",
+    featured: true,
+    liveUrl: "https://bellandisartoria.com/",
+    cover: "/images/project-bellandi.jpg",
+    gallery: [
+      "/images/screen-bellandi-inicio.jpg",
+      "/images/screen-bellandi-coleccion.jpg",
+      "/images/screen-bellandi-producto.jpg",
+    ],
+    stack: ["Shopify", "Liquid", "CSS", "JavaScript"],
+    goal: "Vender ropa de estilo sastre en Italia con una tienda que parezca italiana, no traducida.",
+    context:
+      "Un contacto quería montar un negocio de dropshipping de ropa para el mercado italiano y me pidió la tienda. Igual que con London Langford, vender en otro país no es solo traducir la web: hay que escribir, enseñar y cobrar como se hace allí.",
+    summary: [
+      "La tienda está entera en italiano y con estética de sastrería: tipografía clásica, mucho blanco y negro y fotos grandes de estilo de vida, para que encaje con lo que espera alguien que compra moda en Italia.",
+      "El catálogo se reparte entre hombre y mujer, con subcategorías para cada tipo de prenda, y todo el recorrido de compra empuja hacia el pedido: descuentos visibles, rebaja por llevar varias prendas y la confianza a la vista junto al botón de comprar.",
+    ],
+    highlights: [
+      "Tienda completa en italiano, con euros, envíos con Poste Italiane, GLS y DHL y los pagos que se usan allí",
+      "Menú de hombre y mujer con subcategorías para cada tipo de prenda",
+      "Colecciones con descuento por cantidad: 10 % con 2 artículos, 15 % con 3 y 20 % con 4 o más",
+      "Fichas de producto con variantes de color y talla, aviso de stock y textos de confianza junto al botón",
+      "Seguimiento de pedidos integrado para que el cliente no tenga que escribir preguntando",
+      "Portada con más vendidos, colecciones, reseñas y newsletter con descuento en el primer pedido",
+    ],
+    outcome:
+      "La tienda está publicada y funcionando en Italia.",
+    accent: "#c8a97e",
+  },
 ];
 
 /* ── Retos personales ──
