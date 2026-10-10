@@ -163,13 +163,13 @@ export const projects: Project[] = [
     stack: ["Shopify", "Liquid", "JavaScript", "CSS"],
     goal: "Vender un aceite de edición limitada antes de que salga, y que la tienda siga vendiendo cuando acabe la preventa.",
     context:
-      "Una empresa de Écija lanzaba su propia marca de aceite de oliva virgen extra, con aceituna de sus olivos de Jaén: una edición limitada del primer día de cosecha, en botella de 500 ml. La primera versión de la tienda solo vendía ese aceite. Después llegaron las aceitunas aliñadas y la mermelada de aceite, y la web se quedaba corta.",
+      "Una empresa de Écija lanzaba su propia marca de aceite de oliva virgen extra, con aceituna de sus olivos de Jaén: una edición limitada del primer día de cosecha, en botella de 500 ml. Además querían vender aceitunas aliñadas y mermelada de aceite. No había tienda: había que montarla de cero y abrir en preventa.",
     summary: [
-      "Rehíce la tienda entera. Pasó de un tema oscuro con dorados a uno claro, en crema y verde oliva, con fotos grandes del producto y del campo: más cercano y natural, que es lo que vende la marca.",
+      "Monté la tienda desde cero en Shopify, con un diseño claro en crema y verde oliva y fotos grandes del producto y del campo: cercano y natural, que es lo que vende la marca.",
       "La portada empuja la preventa del aceite con su cuenta atrás y sus packs. Además hay una página para montar tu propia despensa: eliges aceite, aceitunas o mermelada, ves cómo crece el descuento conforme añades cosas y el ahorro se aplica solo en el carrito.",
     ],
     highlights: [
-      "Rediseño completo del tema: claro, en crema y verde oliva, con fotografía de producto y de la finca",
+      "Tienda montada desde cero con un diseño propio: claro, en crema y verde oliva, con fotografía de producto y de la finca",
       "Portada de preventa con cuenta atrás hasta el cierre y los tres packs del aceite a la vista",
       "Ficha del aceite con packs de 2, 4 o 6 botellas: precio por botella, lo que te ahorras y cuándo el envío sale gratis",
       "Página «Crea tu pack»: 5 % de descuento con 3 productos y 10 % con 5 o más, aplicado solo en el carrito",
@@ -177,7 +177,7 @@ export const projects: Project[] = [
       "Cesta lateral con sugerencias, reseñas de clientes, test para elegir aceituna y preguntas frecuentes",
     ],
     outcome:
-      "La tienda nueva está publicada y en preventa hasta el 23 de octubre. Ya no depende de un solo producto: el aceite tira de la venta, y las aceitunas, la mermelada y los packs están pensados para que cada pedido lleve algo más.",
+      "La tienda está publicada y en preventa hasta el 23 de octubre. No depende de un solo producto: el aceite tira de la venta, y las aceitunas, la mermelada y los packs están pensados para que cada pedido lleve algo más.",
     accent: "#9cb46a",
   },
   {
