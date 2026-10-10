@@ -222,6 +222,44 @@ export const projects: Project[] = [
     accent: "#71c780",
   },
   {
+    slug: "bellandisartoria",
+    title: "Bellandi Sartoria",
+    tagline: "Tienda de moda para Italia, en italiano y pensada para el cliente de allí",
+    category: "Shopify · Dropshipping",
+    year: 2026,
+    role: "Investigación de mercado, diseño y montaje de tienda",
+    client: "Bellandi Sartoria",
+    location: "Italia · remoto",
+    status: "live",
+    featured: true,
+    liveUrl: "https://bellandisartoria.com/",
+    cover: "/images/project-bellandi.jpg",
+    gallery: [
+      "/images/screen-bellandi-inicio.jpg",
+      "/images/screen-bellandi-coleccion.jpg",
+      "/images/screen-bellandi-producto.jpg",
+    ],
+    stack: ["Shopify", "Liquid", "CSS", "JavaScript"],
+    goal: "Vender ropa de estilo sastre en Italia con una tienda que parezca italiana, no traducida.",
+    context:
+      "Me contactó una persona que quería montar su negocio de dropshipping de ropa en Italia. Vender en otro país no es solo traducir la web: hay que escribir, enseñar y cobrar como se hace allí, y eso obliga a conocer primero el mercado.",
+    summary: [
+      "Antes de diseñar estudié cómo son las tiendas de moda que funcionan hoy en Italia y las de la competencia: cómo se presentan, cómo escriben y qué esperan sus clientes. Con eso monté la tienda entera en italiano y con estética de sastrería: tipografía clásica, mucho blanco y negro y fotos grandes de estilo de vida.",
+      "El catálogo se reparte entre hombre y mujer, con subcategorías para cada tipo de prenda, y todo el recorrido de compra empuja hacia el pedido: descuentos visibles, rebaja por llevar varias prendas y la confianza a la vista junto al botón de comprar.",
+    ],
+    highlights: [
+      "Estudio del mercado italiano y de las tiendas de la competencia antes de diseñar",
+      "Tienda completa en italiano, con euros, envíos con Poste Italiane, GLS y DHL y los pagos que se usan allí",
+      "Menú de hombre y mujer con subcategorías para cada tipo de prenda",
+      "Colecciones con descuento por cantidad: 10 % con 2 artículos, 15 % con 3 y 20 % con 4 o más",
+      "Fichas de producto con variantes de color y talla, aviso de stock y textos de confianza junto al botón",
+      "Portada con más vendidos, colecciones, reseñas y newsletter con descuento en el primer pedido",
+    ],
+    outcome:
+      "La tienda está publicada y ya está vendiendo en Italia.",
+    accent: "#c8a97e",
+  },
+  {
     slug: "manuelinteriorismo",
     title: "Manuel Interiorismo",
     tagline: "Estudio de interiorismo con animaciones GSAP",
@@ -295,44 +333,6 @@ export const projects: Project[] = [
       { value: "0", label: "tiendas previas: montada de cero" },
     ],
     accent: "#e8712b",
-  },
-  {
-    slug: "bellandisartoria",
-    title: "Bellandi Sartoria",
-    tagline: "Tienda de moda para Italia, en italiano y pensada para el cliente de allí",
-    category: "Shopify · Dropshipping",
-    year: 2026,
-    role: "Diseño y montaje de tienda",
-    client: "Bellandi Sartoria",
-    location: "Italia · remoto",
-    status: "live",
-    featured: true,
-    liveUrl: "https://bellandisartoria.com/",
-    cover: "/images/project-bellandi.jpg",
-    gallery: [
-      "/images/screen-bellandi-inicio.jpg",
-      "/images/screen-bellandi-coleccion.jpg",
-      "/images/screen-bellandi-producto.jpg",
-    ],
-    stack: ["Shopify", "Liquid", "CSS", "JavaScript"],
-    goal: "Vender ropa de estilo sastre en Italia con una tienda que parezca italiana, no traducida.",
-    context:
-      "Un contacto quería montar un negocio de dropshipping de ropa para el mercado italiano y me pidió la tienda. Igual que con London Langford, vender en otro país no es solo traducir la web: hay que escribir, enseñar y cobrar como se hace allí.",
-    summary: [
-      "La tienda está entera en italiano y con estética de sastrería: tipografía clásica, mucho blanco y negro y fotos grandes de estilo de vida, para que encaje con lo que espera alguien que compra moda en Italia.",
-      "El catálogo se reparte entre hombre y mujer, con subcategorías para cada tipo de prenda, y todo el recorrido de compra empuja hacia el pedido: descuentos visibles, rebaja por llevar varias prendas y la confianza a la vista junto al botón de comprar.",
-    ],
-    highlights: [
-      "Tienda completa en italiano, con euros, envíos con Poste Italiane, GLS y DHL y los pagos que se usan allí",
-      "Menú de hombre y mujer con subcategorías para cada tipo de prenda",
-      "Colecciones con descuento por cantidad: 10 % con 2 artículos, 15 % con 3 y 20 % con 4 o más",
-      "Fichas de producto con variantes de color y talla, aviso de stock y textos de confianza junto al botón",
-      "Seguimiento de pedidos integrado para que el cliente no tenga que escribir preguntando",
-      "Portada con más vendidos, colecciones, reseñas y newsletter con descuento en el primer pedido",
-    ],
-    outcome:
-      "La tienda está publicada y funcionando en Italia.",
-    accent: "#c8a97e",
   },
 ];
 
@@ -461,7 +461,7 @@ export const stack = [
 ];
 
 export const metrics = [
-  { value: "5", label: "webs publicadas" },
+  { value: "6", label: "webs publicadas" },
   { value: "2026", label: "aprendiendo" },
   { value: "Écija", label: "base · remoto" },
 ];
