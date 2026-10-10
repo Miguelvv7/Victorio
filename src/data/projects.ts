@@ -227,7 +227,7 @@ export const projects: Project[] = [
     tagline: "Tienda de moda para Italia, en italiano y pensada para el cliente de allí",
     category: "Shopify · Dropshipping",
     year: 2026,
-    role: "Investigación de mercado, diseño y montaje de tienda",
+    role: "Montaje de la tienda a partir del análisis de la competencia",
     client: "Bellandi Sartoria",
     location: "Italia · remoto",
     status: "live",
@@ -242,13 +242,13 @@ export const projects: Project[] = [
     stack: ["Shopify", "Liquid", "CSS", "JavaScript"],
     goal: "Vender ropa de estilo sastre en Italia con una tienda que parezca italiana, no traducida.",
     context:
-      "Me contactó una persona que quería montar su negocio de dropshipping de ropa en Italia. Vender en otro país no es solo traducir la web: hay que escribir, enseñar y cobrar como se hace allí, y eso obliga a conocer primero el mercado.",
+      "Me contactó una persona que quería montar su negocio de dropshipping de ropa en Italia. Vender en otro país no es solo traducir la web: hay que escribir, enseñar y cobrar como se hace allí, y eso obliga a fijarse primero en lo que ya funciona allí.",
     summary: [
-      "Antes de diseñar estudié cómo son las tiendas de moda que funcionan hoy en Italia y las de la competencia: cómo se presentan, cómo escriben y qué esperan sus clientes. Con eso monté la tienda entera en italiano y con estética de sastrería: tipografía clásica, mucho blanco y negro y fotos grandes de estilo de vida.",
+      "Antes de montarla analicé las tiendas de la competencia en Italia: cómo se presentan, cómo escriben y cómo venden, para que la nuestra tuviera el mismo estilo. Con eso monté la tienda entera en italiano y con estética de sastrería: tipografía clásica, mucho blanco y negro y fotos grandes de estilo de vida.",
       "El catálogo se reparte entre hombre y mujer, con subcategorías para cada tipo de prenda, y todo el recorrido de compra empuja hacia el pedido: descuentos visibles, rebaja por llevar varias prendas y la confianza a la vista junto al botón de comprar.",
     ],
     highlights: [
-      "Estudio del mercado italiano y de las tiendas de la competencia antes de diseñar",
+      "Análisis de las tiendas de la competencia para seguir su mismo estilo",
       "Tienda completa en italiano, con euros, envíos con Poste Italiane, GLS y DHL y los pagos que se usan allí",
       "Menú de hombre y mujer con subcategorías para cada tipo de prenda",
       "Colecciones con descuento por cantidad: 10 % con 2 artículos, 15 % con 3 y 20 % con 4 o más",
